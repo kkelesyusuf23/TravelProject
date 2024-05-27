@@ -4,15 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityTravelProject.EntityLayer.Concrete
+namespace CityTravelProject.DtoLayer.RouteDetailDtos
 {
-    public class RouteDetail
+    public class UpdateRouteDetailDto
     {
         public int RouteDetailID { get; set; }
         public int RoutesID { get; set; }
-        public Routes Route { get; set; }
         public int LocationID { get; set; }
-        public Location Location { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; }
     }

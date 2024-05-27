@@ -4,19 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityTravelProject.EntityLayer.Concrete
+namespace CityTravelProject.DtoLayer.LocationDtos
 {
-    public class Location
+    public class CreateLocationDto
     {
-        public int LocationID { get; set; }
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public float Latitude { get; set; }
         public float Longitude { get; set; }
         public string PhotoURL { get; set; }
-        public bool Status { get; set; }
-        public int AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
-        public List<RouteDetail> RouteDetails { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CityTravelProject.DataAccessLayer.EntityFramework
 {
-    public class EfRouteDal : GenericRepository<Route>, IRouteDal
+    public class EfRouteDal : GenericRepository<Routes>, IRouteDal
     {
         public EfRouteDal(TravelContext context) : base(context)
         {

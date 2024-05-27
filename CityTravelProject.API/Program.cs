@@ -1,9 +1,23 @@
+using CityTravelProject.BusinessLayer.Abstract;
+using CityTravelProject.BusinessLayer.Concrete;
+using CityTravelProject.DataAccessLayer.Abstract;
 using CityTravelProject.DataAccessLayer.Concrete;
+using CityTravelProject.DataAccessLayer.EntityFramework;
 using CityTravelProject.EntityLayer.Concrete;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddScoped<ILocationDal, EfLocationDal>();
+builder.Services.AddScoped<ILocationService, LocationManager>();
+
+builder.Services.AddScoped<IRouteDal, EfRouteDal>();
+builder.Services.AddScoped<IRouteService, RouteManager>();
+
+builder.Services.AddScoped<IRouteDetailDal, EfRouteDetailDal>();
+builder.Services.AddScoped<IRouteDetailService, RouteDetailManager>();
 
 builder.Services.AddDbContext<TravelContext>();
 builder.Services.AddHttpClient();

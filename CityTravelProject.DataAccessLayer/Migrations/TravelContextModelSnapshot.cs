@@ -143,6 +143,9 @@ namespace CityTravelProject.DataAccessLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationID"), 1L, 1);
 
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -166,39 +169,9 @@ namespace CityTravelProject.DataAccessLayer.Migrations
 
                     b.HasKey("LocationID");
 
+                    b.HasIndex("AppUserId");
+
                     b.ToTable("Locations");
-                });
-
-            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.Route", b =>
-                {
-                    b.Property<int>("RouteID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RouteID"), 1L, 1);
-
-                    b.Property<int>("AppUserID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RouteName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("RouteID");
-
-                    b.HasIndex("AppUserID");
-
-                    b.ToTable("Routes");
                 });
 
             modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.RouteDetail", b =>
@@ -215,7 +188,7 @@ namespace CityTravelProject.DataAccessLayer.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<int>("RouteID")
+                    b.Property<int>("RoutesID")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
@@ -225,9 +198,36 @@ namespace CityTravelProject.DataAccessLayer.Migrations
 
                     b.HasIndex("LocationID");
 
-                    b.HasIndex("RouteID");
+                    b.HasIndex("RoutesID");
 
                     b.ToTable("RouteDetails");
+                });
+
+            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.Routes", b =>
+                {
+                    b.Property<int>("RoutesID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoutesID"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RouteName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("RoutesID");
+
+                    b.ToTable("Routes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -333,11 +333,11 @@ namespace CityTravelProject.DataAccessLayer.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.Route", b =>
+            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.Location", b =>
                 {
                     b.HasOne("CityTravelProject.EntityLayer.Concrete.AppUser", "AppUser")
-                        .WithMany("Routes")
-                        .HasForeignKey("AppUserID")
+                        .WithMany("Locations")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -352,9 +352,9 @@ namespace CityTravelProject.DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CityTravelProject.EntityLayer.Concrete.Route", "Route")
+                    b.HasOne("CityTravelProject.EntityLayer.Concrete.Routes", "Route")
                         .WithMany("RouteDetails")
-                        .HasForeignKey("RouteID")
+                        .HasForeignKey("RoutesID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -416,7 +416,7 @@ namespace CityTravelProject.DataAccessLayer.Migrations
 
             modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.AppUser", b =>
                 {
-                    b.Navigation("Routes");
+                    b.Navigation("Locations");
                 });
 
             modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.Location", b =>
@@ -424,7 +424,7 @@ namespace CityTravelProject.DataAccessLayer.Migrations
                     b.Navigation("RouteDetails");
                 });
 
-            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.Route", b =>
+            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.Routes", b =>
                 {
                     b.Navigation("RouteDetails");
                 });

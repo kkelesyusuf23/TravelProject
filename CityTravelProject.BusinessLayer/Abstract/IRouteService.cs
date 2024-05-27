@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CityTravelProject.BusinessLayer.Abstract
 {
-    public interface IRouteService:IGenericService<Route>
+    public interface IRouteService:IGenericService<Routes>
     {
     }
 }

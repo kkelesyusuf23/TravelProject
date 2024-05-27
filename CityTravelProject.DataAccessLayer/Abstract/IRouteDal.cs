@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CityTravelProject.DataAccessLayer.Abstract
 {
-    public interface IRouteDal:IGenericDal<Route>
+    public interface IRouteDal:IGenericDal<Routes>
     {
     }
 }

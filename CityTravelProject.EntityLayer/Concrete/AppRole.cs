@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CityTravelProject.EntityLayer.Concrete
 {
-    public class AppRole:IdentityRole<int>
+    public class AppRole : IdentityRole<int>
     {
     }
 }

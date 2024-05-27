@@ -18,27 +18,27 @@ namespace CityTravelProject.BusinessLayer.Concrete
             _routeDal = routeDal;
         }
 
-        public void TAdd(Route entity)
+        public void TAdd(Routes entity)
         {
             _routeDal.Add(entity);
         }
 
-        public void TDelete(Route entity)
+        public void TDelete(Routes entity)
         {
             _routeDal.Delete(entity);
         }
 
-        public Route TGetById(int id)
+        public Routes TGetById(int id)
         {
             return _routeDal.GetById(id);
         }
 
-        public List<Route> TGetListAll()
+        public List<Routes> TGetListAll()
         {
             return _routeDal.GetListAll();
         }
 
-        public void TUpdate(Route entity)
+        public void TUpdate(Routes entity)
         {
             _routeDal.Update(entity);
         }

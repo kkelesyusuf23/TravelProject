@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CityTravelProject.DataAccessLayer.Migrations
 {
-    public partial class mig1 : Migration
+    public partial class migg : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,6 +52,22 @@ namespace CityTravelProject.DataAccessLayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Routes",
+                columns: table => new
+                {
+                    RoutesID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RouteName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Routes", x => x.RoutesID);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,6 +176,59 @@ namespace CityTravelProject.DataAccessLayer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    LocationID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Latitude = table.Column<float>(type: "real", nullable: false),
+                    Longitude = table.Column<float>(type: "real", nullable: false),
+                    PhotoURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    AppUserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.LocationID);
+                    table.ForeignKey(
+                        name: "FK_Locations_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RouteDetails",
+                columns: table => new
+                {
+                    RouteDetailID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoutesID = table.Column<int>(type: "int", nullable: false),
+                    LocationID = table.Column<int>(type: "int", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RouteDetails", x => x.RouteDetailID);
+                    table.ForeignKey(
+                        name: "FK_RouteDetails_Locations_LocationID",
+                        column: x => x.LocationID,
+                        principalTable: "Locations",
+                        principalColumn: "LocationID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RouteDetails_Routes_RoutesID",
+                        column: x => x.RoutesID,
+                        principalTable: "Routes",
+                        principalColumn: "RoutesID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -198,6 +267,21 @@ namespace CityTravelProject.DataAccessLayer.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Locations_AppUserId",
+                table: "Locations",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RouteDetails_LocationID",
+                table: "RouteDetails",
+                column: "LocationID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RouteDetails_RoutesID",
+                table: "RouteDetails",
+                column: "RoutesID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -218,7 +302,16 @@ namespace CityTravelProject.DataAccessLayer.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "RouteDetails");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
+
+            migrationBuilder.DropTable(
+                name: "Routes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

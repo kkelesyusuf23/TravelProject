@@ -16,7 +16,7 @@ namespace CityTravelProject.DataAccessLayer.Concrete
             optionsBuilder.UseSqlServer("Server=YUSUF; initial catalog=DBTravel;integrated security=true;");
         }
         public DbSet<Location> Locations { get; set; }
-        public DbSet<Route> Routes { get; set; }
+        public DbSet<Routes> Routes { get; set; }
         public DbSet<RouteDetail> RouteDetails { get; set; }
 
     }

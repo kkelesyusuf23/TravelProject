@@ -8,7 +8,6 @@ builder.Services.AddDbContext<TravelContext>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<TravelContext>();
-
 builder.Services.AddHttpClient();
 
 var app = builder.Build();

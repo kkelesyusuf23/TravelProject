@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CityTravelProject.DataAccessLayer.Migrations
 {
     [DbContext(typeof(TravelContext))]
-    [Migration("20240519143904_mig1")]
-    partial class mig1
+    [Migration("20240527204316_migg")]
+    partial class migg
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -137,6 +137,101 @@ namespace CityTravelProject.DataAccessLayer.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.Location", b =>
+                {
+                    b.Property<int>("LocationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationID"), 1L, 1);
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Latitude")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Longitude")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("LocationID");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.RouteDetail", b =>
+                {
+                    b.Property<int>("RouteDetailID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RouteDetailID"), 1L, 1);
+
+                    b.Property<int>("LocationID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoutesID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("RouteDetailID");
+
+                    b.HasIndex("LocationID");
+
+                    b.HasIndex("RoutesID");
+
+                    b.ToTable("RouteDetails");
+                });
+
+            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.Routes", b =>
+                {
+                    b.Property<int>("RoutesID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoutesID"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RouteName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("RoutesID");
+
+                    b.ToTable("Routes");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -240,6 +335,36 @@ namespace CityTravelProject.DataAccessLayer.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.Location", b =>
+                {
+                    b.HasOne("CityTravelProject.EntityLayer.Concrete.AppUser", "AppUser")
+                        .WithMany("Locations")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.RouteDetail", b =>
+                {
+                    b.HasOne("CityTravelProject.EntityLayer.Concrete.Location", "Location")
+                        .WithMany("RouteDetails")
+                        .HasForeignKey("LocationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CityTravelProject.EntityLayer.Concrete.Routes", "Route")
+                        .WithMany("RouteDetails")
+                        .HasForeignKey("RoutesID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Route");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("CityTravelProject.EntityLayer.Concrete.AppRole", null)
@@ -289,6 +414,21 @@ namespace CityTravelProject.DataAccessLayer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.AppUser", b =>
+                {
+                    b.Navigation("Locations");
+                });
+
+            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.Location", b =>
+                {
+                    b.Navigation("RouteDetails");
+                });
+
+            modelBuilder.Entity("CityTravelProject.EntityLayer.Concrete.Routes", b =>
+                {
+                    b.Navigation("RouteDetails");
                 });
 #pragma warning restore 612, 618
         }
