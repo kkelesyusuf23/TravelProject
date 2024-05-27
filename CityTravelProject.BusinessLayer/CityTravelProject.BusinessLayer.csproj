@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="ErrorMessages\" />
+    <Folder Include="Container\" />
+    <Folder Include="ValidationRules\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CityTravelProject.DataAccessLayer\CityTravelProject.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\CityTravelProject.EntityLayer\CityTravelProject.EntityLayer.csproj" />
+  </ItemGroup>
+
+</Project>
