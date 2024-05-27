@@ -23,7 +23,14 @@
   <ItemGroup>
     <ProjectReference Include="..\CityTravelProject.BusinessLayer\CityTravelProject.BusinessLayer.csproj" />
     <ProjectReference Include="..\CityTravelProject.DataAccessLayer\CityTravelProject.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\CityTravelProject.DtoLayer\CityTravelProject.DtoLayer.csproj" />
     <ProjectReference Include="..\CityTravelProject.EntityLayer\CityTravelProject.EntityLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dtos\LocationDtos\" />
+    <Folder Include="Dtos\RouteDetailDtos\" />
+    <Folder Include="Dtos\RouteDtos\" />
   </ItemGroup>
 
 </Project>

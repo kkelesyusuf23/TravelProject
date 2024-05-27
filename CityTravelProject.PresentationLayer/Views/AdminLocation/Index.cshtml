@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    ::-webkit-scrollbar {
+        background-color: transparent;
+    }
+</style>
+
+<div class="container">
+    <br />
+    <h3>
+        <a href="javascript:void();"><i class="zmdi zmdi-slideshare"></i> <span> Lokasyon </span></a>
+    </h3>
+    <br />
+    <div style="height: 530px; overflow-x: hidden; overflow-y: scroll;">
+        <table class="table table-hover">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Photo</th>
+                <th>User</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>@item.id</th>
+                    <th>@item.title</th>
+                    <th>@item.rating</th>
+                    <th>@item.rating</th>
+                    <th>@item.rating</th>
+                    <th>@item.rating</th>
+                    <th>@item.rating</th>
+                    <th>@item.rating</th>
+                    <th><a href="@item.imdb_link" class="btn btn-dark">Detaylar</a></th>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
