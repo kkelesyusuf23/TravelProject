@@ -1,0 +1,46 @@
+﻿@model List<CityTravelProject.PresentationLayer.Dtos.RouteDtos.ResultRouteDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+
+
+<div class="container">
+    <br />
+    <h3>
+        <a href="javascript:void();"><i class="zmdi zmdi-slideshare"></i> <span> Rota </span></a>
+    </h3>
+    <br />
+    <div style="height: 535px; overflow-x: hidden; overflow-y: scroll;">
+        <table class="table table-hover">
+            <tr>
+                <th>#</th>
+                <th>Rota Adı</th>
+                <th>Açıklama</th>
+                <th>Oluşturulma Tarihi</th>
+                <th>Durum</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <th>@count</th>
+                    <th>@item.RouteName</th>
+                    <th>@item.Description</th>
+                    <th>@item.CreatedTime</th>
+                    <th>@item.Status</th>
+                    <th><a href="/AdminRoute/DeleteRoute/@item.RoutesID" class="btn btn-outline-danger">Sil</a></th>
+                    <th><a href="/AdminRoute/UpdateRoute/@item.RoutesID" class="btn btn-outline-success">Güncelle</a></th>
+                </tr>
+            }
+        </table>
+        <a href="/AdminRoute/AddRoute" class="btn btn-outline-primary">Rota Ekle</a><br />
+    </div>
+</div>
+
+
+

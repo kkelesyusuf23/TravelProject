@@ -1,0 +1,20 @@
+﻿@model CityTravelProject.PresentationLayer.Dtos.RouteDtos.UpdateRouteDto
+@{
+    ViewData["Title"] = "UpdateRoute";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post">
+    <input type="hidden" asp-for="RoutesID" class="form-control" />
+
+    <label>Başlık</label>
+    <input type="text" asp-for="RouteName" class="form-control" />
+    <br />
+    <label>Açıklama Giriniz</label>
+    <input type="text" asp-for="Description" class="form-control" />
+    <br />
+    <label>Durum</label>
+    <input type="text" asp-for="Status" class="form-control" />
+    <br />
+    <button class="btn btn-primary">Kaydet</button>
+</form>

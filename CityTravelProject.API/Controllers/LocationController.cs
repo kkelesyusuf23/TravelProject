@@ -30,7 +30,7 @@ namespace CityTravelProject.API.Controllers
         {
             Location location = new Location()
             {
-                AppUserId = createLocationDto.UserId,
+                AppUserId = 1,
                 Name = createLocationDto.Name,
                 Description = createLocationDto.Description,
                 Latitude = createLocationDto.Latitude,
@@ -63,7 +63,7 @@ namespace CityTravelProject.API.Controllers
             Location location = new Location()
             {
                 LocationID = updateLocationDto.LocationID,
-                AppUserId = updateLocationDto.UserID,
+                AppUserId = 1,
                 Name = updateLocationDto.Name,
                 Description = updateLocationDto.Description,
                 Latitude = updateLocationDto.Latitude,

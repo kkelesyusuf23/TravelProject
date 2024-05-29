@@ -29,7 +29,8 @@ namespace CityTravelProject.API.Controllers
             {
                 RouteName = createRouteDto.RouteName,
                 Description = createRouteDto.Description,
-                CreatedTime = DateTime.Now
+                CreatedTime = DateTime.Now,
+                Status = true
             };
             _routeService.TAdd(route);
             return Ok("Rota bilgisi başarılı bir şekilde eklenmiştir.");
@@ -55,6 +56,7 @@ namespace CityTravelProject.API.Controllers
                 RoutesID = updateRouteDto.RoutesID,
                 RouteName = updateRouteDto.RouteName,
                 Description = updateRouteDto.Description,
+                Status = updateRouteDto.Status
             };
             _routeService.TUpdate(route);
             return Ok("Rota bilgisi başarılı bir şekilde güncellenmiştir.");

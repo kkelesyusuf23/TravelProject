@@ -1,0 +1,30 @@
+﻿@model CityTravelProject.PresentationLayer.Dtos.LocationDtos.UpdateLocationDto
+@{
+    ViewData["Title"] = "UpdateLocation";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post">
+    <input type="hidden" asp-for="LocationID" class="form-control" />
+
+    <label>Başlık</label>
+    <input type="text" asp-for="Name" class="form-control" />
+    <br />
+    <label>Açıklama Giriniz</label>
+    <input type="text" asp-for="Description" class="form-control" />
+    <br />
+    <label>Enlem</label>
+    <input type="text" asp-for="Latitude" class="form-control" />
+    <br />
+    <label>Boylam</label>
+    <input type="text" asp-for="Longitude" class="form-control" />
+    <br />
+    <label>Resim Linkini Giriniz</label>
+    <input type="text" asp-for="PhotoURL" class="form-control" />
+    <br />
+    <label>Durum</label>
+    <input type="text" asp-for="Status" class="form-control" />
+    <br />
+    <button class="btn btn-primary">Kaydet</button>
+</form>
+

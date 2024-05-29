@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CityTravelProject.EntityLayer.Concrete;
 
-namespace CityTravelProject.DtoLayer.RouteDtos
+namespace CityTravelProject.PresentationLayer.Dtos.RouteDtos
 {
     public class UpdateRouteDto
     {

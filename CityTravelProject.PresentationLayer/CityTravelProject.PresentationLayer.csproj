@@ -27,10 +27,4 @@
     <ProjectReference Include="..\CityTravelProject.EntityLayer\CityTravelProject.EntityLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Dtos\LocationDtos\" />
-    <Folder Include="Dtos\RouteDetailDtos\" />
-    <Folder Include="Dtos\RouteDtos\" />
-  </ItemGroup>
-
 </Project>
