@@ -1,10 +1,12 @@
 ﻿using CityTravelProject.PresentationLayer.Dtos.RouteDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CityTravelProject.PresentationLayer.Controllers
 {
+    //[Authorize]
     public class AdminRouteController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

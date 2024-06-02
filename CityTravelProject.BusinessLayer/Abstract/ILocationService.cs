@@ -9,5 +9,7 @@ namespace CityTravelProject.BusinessLayer.Abstract
 {
     public interface ILocationService:IGenericService<Location>
     {
+        //public List<Location> TGetAllLocationWithUser();
+
     }
 }

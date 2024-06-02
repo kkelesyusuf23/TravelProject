@@ -74,5 +74,11 @@ namespace CityTravelProject.API.Controllers
             _locationService.TUpdate(location);
             return Ok("Güncelleme işlemi başarılı bir şekilde gerçekleştirilmiştir.");
         }
+
+        //[HttpGet("GetAllLocationWithUser")]
+        //public IActionResult GetDrinkAveragePrice()
+        //{
+        //    return Ok(_locationService.TGetAllLocationWithUser());
+        //}
     }
 }

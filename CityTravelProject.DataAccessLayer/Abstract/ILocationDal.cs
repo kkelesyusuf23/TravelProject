@@ -9,5 +9,7 @@ namespace CityTravelProject.DataAccessLayer.Abstract
 {
     public interface ILocationDal:IGenericDal<Location>
     {
+        //public List<Location> GetAllLocationWithUser();
+
     }
 }

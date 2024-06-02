@@ -2,6 +2,7 @@
 using CityTravelProject.DataAccessLayer.Concrete;
 using CityTravelProject.DataAccessLayer.Repositories;
 using CityTravelProject.EntityLayer.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,12 @@ namespace CityTravelProject.DataAccessLayer.EntityFramework
         public EfLocationDal(TravelContext context) : base(context)
         {
         }
+
+        //public List<Location> GetAllLocationWithUser()
+        //{
+        //    var context = new TravelContext();
+        //    var valeus = context.Locations.Include(x => x.AppUser).ToList();
+        //    return valeus;
+        //}
     }
 }

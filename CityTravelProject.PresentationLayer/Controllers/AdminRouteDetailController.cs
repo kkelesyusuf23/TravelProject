@@ -1,10 +1,12 @@
 ﻿using CityTravelProject.PresentationLayer.Dtos.RouteDetailDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CityTravelProject.PresentationLayer.Controllers
 {
+    //[Authorize]
     public class AdminRouteDetailController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -27,17 +29,17 @@ namespace CityTravelProject.PresentationLayer.Controllers
             return View();
         }
         //[HttpGet]
-        //public IActionResult AddRoute()
+        //public IActionResult AddRouteDetail()
         //{
         //    return View();
         //}
         //[HttpPost]
-        //public async Task<IActionResult> AddRoute(CreateRouteDto createRouteDto)
+        //public async Task<IActionResult> AddRouteDetail(CreateRouteDetailDto createRouteDetailDto)
         //{
         //    var client = _httpClientFactory.CreateClient();
-        //    var jsonData = JsonConvert.SerializeObject(createRouteDto);
+        //    var jsonData = JsonConvert.SerializeObject(createRouteDetailDto);
         //    StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        //    var responseMessage = await client.PostAsync("https://localhost:7188/api/Route", content);
+        //    var responseMessage = await client.PostAsync("https://localhost:7188/api/RouteDetail", content);
         //    if (responseMessage.IsSuccessStatusCode)
         //    {
         //        return RedirectToAction("Index");

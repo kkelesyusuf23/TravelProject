@@ -28,6 +28,11 @@ namespace CityTravelProject.BusinessLayer.Concrete
             _locationDal.Delete(entity);
         }
 
+        //public List<Location> TGetAllLocationWithUser()
+        //{
+        //    return _locationDal.GetAllLocationWithUser();
+        //}
+
         public Location TGetById(int id)
         {
             return _locationDal.GetById(id);

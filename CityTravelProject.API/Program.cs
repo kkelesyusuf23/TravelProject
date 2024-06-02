@@ -26,6 +26,8 @@ builder.Services.AddIdentity<AppUser, AppRole>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddControllers();
+builder.Services.AddHttpClient<CityTravelProject.BusinessLayer.GoogleMapsService>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -1,0 +1,144 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<section class="w3l-inner-banner-main">
+    <div class="about-inner about editContent">
+        <div class="container">
+            <div class="breadcrumbs-sub">
+                <ul class="breadcrumbs-custom-path">
+                    <li class="right-side propClone"><a href="index.html" class="editContent">Home <span class="fa fa-angle-right" aria-hidden="true"></span></a> <p></li>
+                    <li class="active editContent">Location</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="w3l-content-with-photo-4" id="about">
+    <div class="content-with-photo4-block editContent">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map" style="height: 60vh;"></div>
+                </div>
+                <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+                    <div id="selectedAddresses" class="mb-3">
+                        <!-- Seçilen adreslerin listesi buraya gelecek -->
+                    </div>
+                    <button class="btn btn-warning" id="saveRoute">Rota oluştur</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    async function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 39.0, lng: 35.0 }, // Başlangıç merkezi (örneğin Türkiye)
+            zoom: 6
+        });
+
+        // Belirli bir bölgeyi sınırlayan dikdörtgen
+        var allowedBounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(36.0, 26.0), // Güneybatı köşesi
+            new google.maps.LatLng(42.0, 45.0)  // Kuzeydoğu köşesi
+        );
+
+        var lastValidCenter = map.getCenter();
+
+        // Harita sınırlarını aşmamak için kontrol
+        google.maps.event.addListener(map, 'center_changed', function () {
+            if (allowedBounds.contains(map.getCenter())) {
+                // Harita sınırlarına uygun
+                lastValidCenter = map.getCenter();
+                return;
+            }
+            // Sınırları aştı, son geçerli konuma geri dön
+            map.panTo(lastValidCenter);
+        });
+
+        var markers = [];
+
+        // Veritabanından belirli lokasyonları al
+        try {
+            const locationsResponse = await fetch('https://localhost:7188/api/Maps/GetLocations');
+            if (!locationsResponse.ok) {
+                throw new Error(`HTTP error! status: ${locationsResponse.status}`);
+            }
+            const locations = await locationsResponse.json();
+
+            console.log('Fetched locations:', locations);
+
+            // Lokasyonları bir değişkende sakla
+            var locationsData = locations.map(location => ({
+                name: location.name,
+                latitude: location.latitude,
+                longitude: location.longitude
+            }));
+
+            // Lokasyonları haritada göster
+            locationsData.forEach(location => {
+                var marker = new google.maps.Marker({
+                    position: { lat: location.latitude, lng: location.longitude },
+                    map: map,
+                    title: location.name
+                });
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: `<h5>${location.name}</h5><p>Bu bir kayıtlı lokasyondur.</p>`
+                });
+
+                marker.addListener('click', function () {
+                    infowindow.open(map, marker);
+                });
+
+                markers.push(marker);
+            });
+        } catch (error) {
+            console.error('Veriler alınırken hata oluştu:', error);
+        }
+
+        // Kullanıcının haritaya tıklayarak konum seçmesi
+        map.addListener('click', function (event) {
+            // Tıklanan nokta haritanın izin verilen sınırlar içinde mi kontrol et
+            if (!allowedBounds.contains(event.latLng)) {
+                alert("Lütfen izin verilen bölge içinde bir konum seçin.");
+                return;
+            }
+
+            var latitude = event.latLng.lat();
+            var longitude = event.latLng.lng();
+            var marker = new google.maps.Marker({
+                position: { lat: latitude, lng: longitude },
+                map: map
+            });
+
+            var selectedAddresses = document.getElementById('selectedAddresses');
+            var addressItem = document.createElement('div');
+            addressItem.innerHTML = `Lat: ${latitude}, Lng: ${longitude}`;
+            selectedAddresses.appendChild(addressItem);
+
+            markers.push(marker);
+        });
+
+        // Rota oluşturma işlemi
+        document.getElementById('saveRoute').addEventListener('click', function () {
+            var route = markers.map(marker => ({
+                name: marker.title || "User added location",
+                latitude: marker.position.lat(),
+                longitude: marker.position.lng()
+            }));
+
+            saveRoute(route);
+        });
+    }
+
+    initMap();
+
+</script>
+
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZpnj0Vt7cFAHZtUAQnpPCoqz6J5eokM8&callback=initMap"></script>
