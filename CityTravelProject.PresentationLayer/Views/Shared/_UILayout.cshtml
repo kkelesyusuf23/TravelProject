@@ -11,7 +11,36 @@
 	<link rel="stylesheet" href="~/ui/assets/css/style-starter.css">
 	<link href="//fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 	<link href="//fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+	<style>
+		/* Kaydırma çubuğu stilleri */
+		.scrollbar {
+			overflow-y: auto;
+			max-height: calc(60vh - 100px);
+			padding: 10px;
+			scrollbar-width: thin; /* Mozilla Firefox için */
+			scrollbar-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0); /* Mozilla Firefox için */
+		}
+
+			.scrollbar::-webkit-scrollbar {
+				width: 3px; /* Google Chrome ve Safari için */
+			}
+
+			.scrollbar::-webkit-scrollbar-thumb {
+				background-color: rgba(0, 0, 0, 0.5); /* Kaydırma çubuğu rengi */
+				border-radius: 3px; /* Kaydırma çubuğu kenar yarıçapı */
+			}
+
+			.scrollbar::-webkit-scrollbar-track {
+				background-color: rgba(0, 0, 0, 0); /* Kaydırma çubuğu yolunun rengi */
+			}
+
+
+		#selectedAddresses div {
+			padding: 5px 0; /* Üst ve alt boşluk */
+		}
+	</style>
 </head>
 <body id="home">
 	<section class=" w3l-header-4 header-sticky">

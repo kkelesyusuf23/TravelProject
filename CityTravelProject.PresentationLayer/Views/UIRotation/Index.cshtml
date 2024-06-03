@@ -8,7 +8,7 @@
         <div class="container">
             <div class="breadcrumbs-sub">
                 <ul class="breadcrumbs-custom-path">
-                    <li class="right-side propClone"><a href="index.html" class="editContent">Home <span class="fa fa-angle-right" aria-hidden="true"></span></a> <p></li>
+                    <li class="right-side propClone"><a href="index.html" class="editContent">Home <span class="fa fa-angle-right" aria-hidden="true"></span></a></li>
                     <li class="active editContent">Location</li>
                 </ul>
             </div>
@@ -16,70 +16,75 @@
     </div>
 </section>
 
-<section class="w3l-content-with-photo-4" id="about">
-    <div class="content-with-photo4-block editContent">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="map" style="height: 60vh;"></div>
-                </div>
-                <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+
+
+
+
+<section class="w3l-content-with-photo-4" id="about" style="margin:4% 1% 4% 1%">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 pr-md-4">
+                <div id="map" style="height: 60vh;"></div>
+            </div>
+            <div class="col-md-4 d-flex flex-column justify-content-between align-items-center pl-md-4 right-column" style="height: 60vh;">
+                <div class="scrollbar">
                     <div id="selectedAddresses" class="mb-3">
                         <!-- Seçilen adreslerin listesi buraya gelecek -->
                     </div>
-                    <button class="btn btn-warning" id="saveRoute">Rota oluştur</button>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-warning" id="saveRoute"><i class="fa-solid fa-download fa-2x"></i></button>
+                    <button class="btn btn-primary" id="drawRoute"><i class="fa-solid fa-route fa-2x"></i></button>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
+
+
+
+
+
 <script>
     async function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: 39.0, lng: 35.0 }, // Başlangıç merkezi (örneğin Türkiye)
+            center: { lat: 39.0, lng: 35.0 },
             zoom: 6
         });
 
-        // Belirli bir bölgeyi sınırlayan dikdörtgen
         var allowedBounds = new google.maps.LatLngBounds(
-            new google.maps.LatLng(36.0, 26.0), // Güneybatı köşesi
-            new google.maps.LatLng(42.0, 45.0)  // Kuzeydoğu köşesi
+            new google.maps.LatLng(36.0, 26.0),
+            new google.maps.LatLng(42.0, 45.0)
         );
 
         var lastValidCenter = map.getCenter();
 
-        // Harita sınırlarını aşmamak için kontrol
         google.maps.event.addListener(map, 'center_changed', function () {
             if (allowedBounds.contains(map.getCenter())) {
-                // Harita sınırlarına uygun
                 lastValidCenter = map.getCenter();
                 return;
             }
-            // Sınırları aştı, son geçerli konuma geri dön
             map.panTo(lastValidCenter);
         });
 
         var markers = [];
+        var routeCoordinates = [];
 
-        // Veritabanından belirli lokasyonları al
+        // Veritabanından lokasyonları çek
         try {
-            const locationsResponse = await fetch('https://localhost:7188/api/Maps/GetLocations');
+            const locationsResponse = await fetch('/api/Maps');
             if (!locationsResponse.ok) {
                 throw new Error(`HTTP error! status: ${locationsResponse.status}`);
             }
             const locations = await locationsResponse.json();
 
-            console.log('Fetched locations:', locations);
-
-            // Lokasyonları bir değişkende sakla
             var locationsData = locations.map(location => ({
                 name: location.name,
                 latitude: location.latitude,
                 longitude: location.longitude
             }));
 
-            // Lokasyonları haritada göster
             locationsData.forEach(location => {
                 var marker = new google.maps.Marker({
                     position: { lat: location.latitude, lng: location.longitude },
@@ -103,7 +108,6 @@
 
         // Kullanıcının haritaya tıklayarak konum seçmesi
         map.addListener('click', function (event) {
-            // Tıklanan nokta haritanın izin verilen sınırlar içinde mi kontrol et
             if (!allowedBounds.contains(event.latLng)) {
                 alert("Lütfen izin verilen bölge içinde bir konum seçin.");
                 return;
@@ -122,23 +126,58 @@
             selectedAddresses.appendChild(addressItem);
 
             markers.push(marker);
+            routeCoordinates.push({ lat: latitude, lng: longitude });
         });
 
-        // Rota oluşturma işlemi
-        document.getElementById('saveRoute').addEventListener('click', function () {
-            var route = markers.map(marker => ({
-                name: marker.title || "User added location",
-                latitude: marker.position.lat(),
-                longitude: marker.position.lng()
+        // Rotayı çiz
+        document.getElementById('drawRoute').addEventListener('click', function () {
+            if (routeCoordinates.length > 1) {
+                var start = routeCoordinates[0];
+                var end = routeCoordinates[routeCoordinates.length - 1];
+                var waypoints = routeCoordinates.slice(1, routeCoordinates.length - 1).map(coord => `${coord.lat},${coord.lng}`).join('|');
+
+                var url = `https://www.google.com/maps/dir/?api=1&origin=${start.lat},${start.lng}&destination=${end.lat},${end.lng}&waypoints=${waypoints}&travelmode=driving`;
+                window.open(url, '_blank');
+            } else {
+                alert("Lütfen en az iki nokta seçin.");
+            }
+        });
+
+        // Rotayı kaydet
+        document.getElementById('saveRoute').addEventListener('click', async function () {
+            var routeDetails = markers.map(marker => ({
+                Name: marker.title || "User added location",
+                Latitude: marker.position.lat(),
+                Longitude: marker.position.lng()
             }));
 
-            saveRoute(route);
+            var routeData = {
+                RouteName: "Kullanıcı Rotası",
+                Description: "Kullanıcı tarafından oluşturulan rota",
+                RouteDetails: routeDetails
+            };
+
+            try {
+                const response = await fetch('/api/Route', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(routeData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                alert('Rota başarılı bir şekilde kaydedildi!');
+            } catch (error) {
+                console.error('Rota kaydedilirken hata oluştu:', error);
+            }
         });
     }
 
     initMap();
-
 </script>
-
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZpnj0Vt7cFAHZtUAQnpPCoqz6J5eokM8&callback=initMap"></script>
