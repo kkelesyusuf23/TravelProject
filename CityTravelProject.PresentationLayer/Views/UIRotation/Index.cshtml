@@ -1,6 +1,9 @@
-﻿@{
+﻿@using Newtonsoft.Json
+@model List<CityTravelProject.EntityLayer.Concrete.Location>
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_UILayout.cshtml";
+    var locations = ViewBag.Locations as List<CityTravelProject.PresentationLayer.Controllers.UIRotationController>;
 }
 
 <section class="w3l-inner-banner-main">
@@ -16,12 +19,32 @@
     </div>
 </section>
 
-
-
-
-
-<section class="w3l-content-with-photo-4" id="about" style="margin:4% 1% 4% 1%">
+<section class="w3l-content-with-photo-4" id="about">
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h3>Locations</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Latitude</th>
+                            <th scope="col">Longitude</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var location in Model)
+                        {
+                            <tr>
+                                <td>@location.Name</td>
+                                <td>@location.Latitude</td>
+                                <td>@location.Longitude</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-8 pr-md-4">
                 <div id="map" style="height: 60vh;"></div>
@@ -41,13 +64,8 @@
     </div>
 </section>
 
-
-
-
-
-
 <script>
-    async function initMap() {
+    function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: 39.0, lng: 35.0 },
             zoom: 6
@@ -72,39 +90,25 @@
         var routeCoordinates = [];
 
         // Veritabanından lokasyonları çek
-        try {
-            const locationsResponse = await fetch('/api/Maps');
-            if (!locationsResponse.ok) {
-                throw new Error(`HTTP error! status: ${locationsResponse.status}`);
-            }
-            const locations = await locationsResponse.json();
+        var locationsData = @Html.Raw(JsonConvert.SerializeObject(locations));
 
-            var locationsData = locations.map(location => ({
-                name: location.name,
-                latitude: location.latitude,
-                longitude: location.longitude
-            }));
-
-            locationsData.forEach(location => {
-                var marker = new google.maps.Marker({
-                    position: { lat: location.latitude, lng: location.longitude },
-                    map: map,
-                    title: location.name
-                });
-
-                var infowindow = new google.maps.InfoWindow({
-                    content: `<h5>${location.name}</h5><p>Bu bir kayıtlı lokasyondur.</p>`
-                });
-
-                marker.addListener('click', function () {
-                    infowindow.open(map, marker);
-                });
-
-                markers.push(marker);
+        locationsData.forEach(location => {
+            var marker = new google.maps.Marker({
+                position: { lat: location.latitude, lng: location.longitude },
+                map: map,
+                title: location.name
             });
-        } catch (error) {
-            console.error('Veriler alınırken hata oluştu:', error);
-        }
+
+            var infowindow = new google.maps.InfoWindow({
+                content: `<h5>${location.name}</h5><p>Bu bir kayıtlı lokasyondur.</p>`
+            });
+
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+
+            markers.push(marker);
+        });
 
         // Kullanıcının haritaya tıklayarak konum seçmesi
         map.addListener('click', function (event) {
