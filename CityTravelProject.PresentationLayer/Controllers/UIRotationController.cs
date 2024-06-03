@@ -25,7 +25,6 @@ namespace CityTravelProject.PresentationLayer.Controllers
                 var jsonData = await response.Content.ReadAsStringAsync();
                 var locations = JsonConvert.DeserializeObject<List<Location>>(jsonData);
                 ViewBag.Locations = locations;
-                return View(locations);
             }
             else
             {
