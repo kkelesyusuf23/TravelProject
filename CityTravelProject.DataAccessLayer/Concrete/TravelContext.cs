@@ -18,6 +18,12 @@ namespace CityTravelProject.DataAccessLayer.Concrete
         public DbSet<Location> Locations { get; set; }
         public DbSet<Routes> Routes { get; set; }
         public DbSet<RouteDetail> RouteDetails { get; set; }
+        public DbSet<CityMaps> CityMaps { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<ContactInformation> ContactInformations { get; set; }
+        public DbSet<Future> Futures { get; set; }
+        public DbSet<TravelDestinations> TravelDestinations { get; set; }
+
 
     }
 }

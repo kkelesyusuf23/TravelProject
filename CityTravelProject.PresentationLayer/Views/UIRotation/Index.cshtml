@@ -9,16 +9,12 @@
             <div class="breadcrumbs-sub">
                 <ul class="breadcrumbs-custom-path">
                     <li class="right-side propClone"><a href="index.html" class="editContent">Home <span class="fa fa-angle-right" aria-hidden="true"></span></a></li>
-                    <li class="active editContent">Location</li>
+                    <li class="active editContent">Rotation</li>
                 </ul>
             </div>
         </div>
     </div>
 </section>
-
-
-
-
 
 <section class="w3l-content-with-photo-4" id="about" style="margin:4% 1% 4% 1%">
     <div class="container-fluid">
@@ -26,25 +22,21 @@
             <div class="col-md-8 pr-md-4">
                 <div id="map" style="height: 60vh;"></div>
             </div>
-            <div class="col-md-4 d-flex flex-column justify-content-between align-items-center pl-md-4 right-column" style="height: 60vh;">
-                <div class="scrollbar">
-                    <div id="selectedAddresses" class="mb-3">
+            <div class="col-md-4 d-flex flex-column justify-content-between align-items-center pl-md-4 right-column" style="height: 60vh; background-color: #f7f7f7; border-radius:1%;border: 1px solid #ece4ec;">
+                <div class="scrollbar" style="position: relative; width: 100%; height: 100%; overflow: auto;">
+                    <div id="selectedAddresses" class="mb-3" style="position: relative; z-index: 1;">
                         <!-- Seçilen adreslerin listesi buraya gelecek -->
                     </div>
+                    <i id="centerIcon" class="fa fa-road" style="font-size: 5em; color: #ccc; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0;"></i>
                 </div>
                 <div class="mb-3">
-                    <button class="btn btn-warning" id="saveRoute"><i class="fa-solid fa-download fa-2x"></i></button>
-                    <button class="btn btn-primary" id="drawRoute"><i class="fa-solid fa-route fa-2x"></i></button>
+                    <button class="btn btn-outline-success" id="saveRoute"><i class="fa-solid fa-download fa-2x"></i></button>
+                    <button class="btn btn-outline-primary" id="drawRoute"><i class="fa-solid fa-route fa-2x"></i></button>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-
-
-
-
 
 <script>
     async function initMap() {
@@ -66,33 +58,28 @@
                 return;
             }
             map.panTo(lastValidCenter);
-        }); 
+        });
 
         var markers = [];
         var routeCoordinates = [];
 
         // Veritabanından lokasyonları çek
         try {
-            const locationsResponse = await fetch('/api/Maps');
+            const locationsResponse = await fetch('/api/Location');
             if (!locationsResponse.ok) {
                 throw new Error(`HTTP error! status: ${locationsResponse.status}`);
             }
-            const locations = await locationsResponse.json();
+            const locationsData = await locationsResponse.json();
 
-            var locationsData = locations.map(location => ({
-                name: location.name,
-                latitude: location.latitude,
-                longitude: location.longitude
-            }));
-
+            // Lokasyonlar için marker'lar oluştur
             locationsData.forEach(location => {
-                var marker = new google.maps.Marker({
+                const marker = new google.maps.Marker({
                     position: { lat: location.latitude, lng: location.longitude },
                     map: map,
                     title: location.name
                 });
 
-                var infowindow = new google.maps.InfoWindow({
+                const infowindow = new google.maps.InfoWindow({
                     content: `<h5>${location.name}</h5><p>Bu bir kayıtlı lokasyondur.</p>`
                 });
 
