@@ -1,0 +1,25 @@
+﻿@model CityTravelProject.PresentationLayer.Dtos.ContactDtos.UpdateContactDto
+@{
+    ViewData["Title"] = "UpdateContact";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post">
+    <input type="hidden" asp-for="ContactID" />
+    <label>Name</label>
+    <input type="text" asp-for="Name" class="form-control" />
+    <br />
+    <label>Konu</label>
+    <input type="text" asp-for="Subject" class="form-control" />
+    <br />
+    <label>Email</label>
+    <input type="text" asp-for="Email" class="form-control" />
+    <br />
+    <label>Message</label>
+    <input type="text" asp-for="Message" class="form-control" />
+    <br />
+    <label>Durum</label>
+    <input type="text" asp-for="Status" class="form-control" />
+    <br />
+    <button class="btn btn-primary">Kaydet</button>
+</form>

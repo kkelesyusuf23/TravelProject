@@ -19,6 +19,21 @@ builder.Services.AddScoped<IRouteService, RouteManager>();
 builder.Services.AddScoped<IRouteDetailDal, EfRouteDetailDal>();
 builder.Services.AddScoped<IRouteDetailService, RouteDetailManager>();
 
+builder.Services.AddScoped<ICityMapsDal, EfCityMapsDal>();
+builder.Services.AddScoped<ICityMapsService, CityMapsManager>();
+
+builder.Services.AddScoped<IContactDal, EfContactDal>();
+builder.Services.AddScoped<IContactService, ContactManager>();
+
+builder.Services.AddScoped<IContactInformationDal, EfContactInformationDal>();
+builder.Services.AddScoped<IContactInformationService, ContactInformationManager>();
+
+builder.Services.AddScoped<IFutureDal, EfFutureDal>();
+builder.Services.AddScoped<IFutureService, FutureManager>();
+
+builder.Services.AddScoped<ITravelDestinationsDal, EfTravelDestinationsDal>();
+builder.Services.AddScoped<ITravelDestinationsService, TravelDestinationsManager>();
+
 builder.Services.AddDbContext<TravelContext>();
 builder.Services.AddHttpClient();
 builder.Services.AddIdentity<AppUser, AppRole>()

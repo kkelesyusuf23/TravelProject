@@ -1,0 +1,19 @@
+﻿@model CityTravelProject.PresentationLayer.Dtos.CityMapsDtos.CreateCityMapsDto
+@{
+    ViewData["Title"] = "AddCityMap";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post">
+    <label>Şehir</label>
+    <input type="text" asp-for="City" class="form-control" />
+    <br />
+    <label>Görüntü</label>
+    <input type="text" asp-for="ImageURL" class="form-control" />
+    <br />
+    <label>Durum</label>
+    <input type="text" asp-for="Status" class="form-control" />
+    <br />
+    <button class="btn btn-primary">Kaydet</button>
+</form>
+

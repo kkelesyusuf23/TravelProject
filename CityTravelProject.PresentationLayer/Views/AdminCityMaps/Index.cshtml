@@ -1,0 +1,123 @@
+﻿@model List<CityTravelProject.PresentationLayer.Dtos.CityMapsDtos.ResultCityMapsDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+    ::-webkit-scrollbar {
+        background-color: transparent;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-content {
+        display: block;
+        width: 50%;
+        max-width: 500px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .close {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        color: #fff;
+        font-size: 30px;
+        font-weight: bold;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        padding: 5px 10px;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+    .icon {
+        font-size: 35px; /* İkon boyutunu artırmak için font-size değerini büyüttük */
+        cursor: pointer;
+        color: #007bff;
+        transition: color 0.3s ease;
+    }
+
+        .icon:hover {
+            color: #0056b3;
+        }
+</style>
+
+<div class="container">
+    <br />
+    <h3>
+        <a href="javascript:void();"><i class="zmdi zmdi-slideshare"></i> <span> Lokasyon </span></a>
+    </h3>
+    <br />
+    <div style="height: 535px; overflow-x: hidden; overflow-y: scroll;">
+        <table class="table table-hover">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Latitude</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <th>@count</th>
+                    <th>@item.City</th>
+                    <th>@item.Status</th>
+                    <th>
+                        <i class="fas fa-image icon" onclick="showImage('@item.ImageURL')"></i>
+                    </th>
+                    <th><a href="/AdminCityMaps/DeleteCityMaps/@item.CityMapsID" class="btn btn-outline-danger">Sil</a></th>
+                    <th><a href="/AdminCityMaps/UpdateCityMaps/@item.CityMapsID" class="btn btn-outline-success">Güncelle</a></th>
+                </tr>
+            }
+        </table>
+        <a href="/AdminCityMaps/AddCityMap" class="btn btn-outline-primary">Şehir Ekle</a><br />
+    </div>
+</div>
+
+<div id="modal" class="modal" onclick="closeModal(event)">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modal-img">
+</div>
+
+<script>
+    function showImage(src) {
+        var modal = document.getElementById("modal");
+        var modalImg = document.getElementById("modal-img");
+
+        modal.style.display = "block";
+        modalImg.src = src;
+    }
+
+    function closeModal(event) {
+        var modal = document.getElementById("modal");
+        if (event.target !== modal.querySelector('.modal-content')) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+

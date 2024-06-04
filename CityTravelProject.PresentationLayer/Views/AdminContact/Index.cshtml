@@ -1,0 +1,99 @@
+﻿@* @model List<CityTravelProject.PresentationLayer.Dtos.ContactDtos.ResultContactDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+<div class="container">
+    <br />
+    <h3>
+        <a href="javascript:void();"><i class="zmdi zmdi-slideshare"></i> <span> Lokasyon </span></a>
+    </h3>
+    <br />
+    <div style="height: 535px; overflow-x: hidden; overflow-y: scroll;">
+        <table class="table table-hover">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Subject</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th>Güncelle</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <th>@count</th>
+                    <th>@item.Name</th>
+                    <th>@item.Subject</th>
+                    <th>@item.Email</th>
+                    <th><a><i class="fas fa-envelope-open-text" onclick="showMessageModal('@item.Message')"></i></a></th>
+                    <th>@item.Status</th>
+                    <th><a href="/AdminContact/UpdateContact/@item.ContactID" class="btn btn-outline-success">Güncelle</a></th>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<div id="modal" class="modal" onclick="closeModal(event)">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modal-img">
+</div>
+
+<script>
+    function showImage(src) {
+        var modal = document.getElementById("modal");
+        var modalImg = document.getElementById("modal-img");
+
+        modal.style.display = "block";
+        modalImg.src = src;
+    }
+
+    function closeModal(event) {
+        var modal = document.getElementById("modal");
+        if (event.target !== modal.querySelector('.modal-content')) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+<div id="modal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="modal-message"></p>
+    </div>
+</div>
+
+<script>
+    function showImage(src) {
+        var modal = document.getElementById("modal");
+        var modalImg = document.getElementById("modal-img");
+
+        modal.style.display = "block";
+        modalImg.src = src;
+    }
+
+    function showMessageModal(message) {
+        var modal = document.getElementById("modal");
+        var modalMessage = document.getElementById("modal-message");
+
+        modal.style.display = "block";
+        modalMessage.innerHTML = message;
+    }
+
+    function closeModal(event) {
+        var modal = document.getElementById("modal");
+        if (event && event.target !== modal.querySelector('.modal-content')) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+
+ *@
