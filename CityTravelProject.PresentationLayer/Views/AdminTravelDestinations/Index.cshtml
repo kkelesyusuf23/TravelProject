@@ -1,0 +1,165 @@
+﻿@model List<CityTravelProject.PresentationLayer.Dtos.TravelDestinationsDtos.ResultTravelDestinationsDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+    ::-webkit-scrollbar {
+        background-color: transparent;
+    }
+
+    .modal-content p {
+        color: #111;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-content {
+        display: block;
+        width: 80%;
+        max-width: 800px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .close {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        color: #fff;
+        font-size: 30px;
+        font-weight: bold;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        padding: 5px 10px;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+    .icon {
+        font-size: 35px;
+        cursor: pointer;
+        color: #007bff;
+        transition: color 0.3s ease;
+    }
+
+        .icon:hover {
+            color: #0056b3;
+        }
+</style>
+
+<div class="container">
+    <br />
+    <h3>
+        <a href="javascript:void();"><i class="zmdi zmdi-slideshare"></i> <span> Lokasyon </span></a>
+    </h3>
+    <br />
+    <div style="height: 535px; overflow-x: hidden; overflow-y: scroll;">
+        <table class="table table-hover">
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>ImageURL</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <th>@count</th>
+                    <th>@item.Title</th>
+                    <th>
+                        <a href="javascript:void(0);" onclick="showDescriptionModal('@item.Description')">
+                            <i class="fas fa-info-circle icon"></i>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="javascript:void(0);" onclick="showImageModal('@item.ImageURL')">
+                            <i class="fas fa-image icon"></i>
+                        </a>
+                    </th>
+                    <th><a href="/AdminTravelDestinations/DeleteTravelDestinations/@item.TravelDestinationsID" class="btn btn-outline-danger">Sil</a></th>
+                    <th><a href="/AdminTravelDestinations/UpdateTravelDestinations/@item.TravelDestinationsID" class="btn btn-outline-success">Güncelle</a></th>
+                </tr>
+            }
+        </table>
+        <a href="/AdminTravelDestinations/AddTravelDestinations" class="btn btn-outline-primary">Future Ekle</a><br />
+    </div>
+</div>
+
+<!-- Image Modal -->
+<div id="image-modal" class="modal" onclick="closeImageModal(event)">
+    <span class="close" onclick="closeImageModal()">&times;</span>
+    <div class="modal-content">
+        <img id="modal-img" width="100%" style="border:0" />
+    </div>
+</div>
+
+<!-- Description Modal -->
+<div id="description-modal" class="modal" onclick="closeDescriptionModal(event)">
+    <span class="close" onclick="closeDescriptionModal()">&times;</span>
+    <div class="modal-content">
+        <p id="modal-description"></p>
+    </div>
+</div>
+
+<script>
+    function showImageModal(url) {
+        var modal = document.getElementById("image-modal");
+        var modalImg = document.getElementById("modal-img");
+
+        modal.style.display = "block";
+        modalImg.src = url;
+    }
+
+    function closeImageModal(event) {
+        var modal = document.getElementById("image-modal");
+        if (event.target === modal || event.target.className === 'close') {
+            modal.style.display = "none";
+            document.getElementById("modal-img").src = '';
+        }
+    }
+
+    function showDescriptionModal(description) {
+        var modal = document.getElementById("description-modal");
+        var modalDescription = document.getElementById("modal-description");
+
+        modal.style.display = "block";
+        modalDescription.innerText = description;
+    }
+
+    function closeDescriptionModal(event) {
+        var modal = document.getElementById("description-modal");
+        if (event.target === modal || event.target.className === 'close') {
+            modal.style.display = "none";
+            document.getElementById("modal-description").innerText = '';
+        }
+    }
+</script>
+
+

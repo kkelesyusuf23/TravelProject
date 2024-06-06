@@ -1,0 +1,21 @@
+﻿@model CityTravelProject.PresentationLayer.Dtos.ContactInformationDto.CreateContactInformationDto
+@{
+    ViewData["Title"] = "AddContactInformation";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post">
+    <label>Icon</label>
+    <input type="text" asp-for="Icon" class="form-control" />
+    <br />
+    <label>Description</label>
+    <input type="text" asp-for="Description" class="form-control" />
+    <br />
+    <label>Harita</label>
+    <input type="text" asp-for="MapURL" class="form-control" />
+    <br />
+    <label>Durum</label>
+    <input type="text" asp-for="Status" class="form-control" />
+    <br />
+    <button class="btn btn-primary">Kaydet</button>
+</form>
