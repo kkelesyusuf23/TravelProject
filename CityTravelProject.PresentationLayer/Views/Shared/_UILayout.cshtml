@@ -102,8 +102,53 @@
             max-width: 700px;
         }
 
+        .custom-control-prev,
+        .custom-control-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(23, 162, 184, 0.5);
+            border-radius: 50%;
         }
+
+        .custom-control-prev {
+            left: -75px;
+        }
+
+        .custom-control-next {
+            right: -75px;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-image: none;
+        }
+
+            .carousel-control-prev-icon::after,
+            .carousel-control-next-icon::after {
+                content: '';
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                background-color: white;
+                mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M4.5 0l-4 4 4 4 1-1-3-3 3-3-1-1z%27/%3e%3c/svg%3e') no-repeat center center / contain;
+                -webkit-mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M4.5 0l-4 4 4 4 1-1-3-3 3-3-1-1z%27/%3e%3c/svg%3e') no-repeat center center / contain;
+            }
+
+            .carousel-control-next-icon::after {
+                mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M3.5 0l-1 1 3 3-3 3 1 1 4-4-4-4z%27/%3e%3c/svg%3e') no-repeat center center / contain;
+                -webkit-mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M3.5 0l-1 1 3 3-3 3 1 1 4-4-4-4z%27/%3e%3c/svg%3e') no-repeat center center / contain;
+            }
     </style>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Font Awesome kit link for icons -->
+
 </head>
 <body id="home">
     <section class=" w3l-header-4 header-sticky">
@@ -379,6 +424,16 @@
             updateContent();
         });
 
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#imageModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var imageSrc = button.data('src'); // Extract info from data-* attributes
+                var modal = $(this);
+                modal.find('.modal-body img').attr('src', imageSrc);
+            });
+        });
     </script>
 </body>
 </html>
