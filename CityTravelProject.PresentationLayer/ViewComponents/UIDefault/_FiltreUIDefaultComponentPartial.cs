@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CityTravelProject.PresentationLayer.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace CityTravelProject.PresentationLayer.ViewComponents.UIDefault
 {
-    public class _FiltreUIDefaultComponentPartial:ViewComponent
+    public class _FiltreUIDefaultComponentPartial : ViewComponent
     {
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> Invoke()
         {
             return View();
         }

@@ -11,7 +11,9 @@
     <link href="//fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="//fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
         /* Kaydırma çubuğu stilleri */
         .scrollbar {
@@ -141,8 +143,49 @@
                 mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M3.5 0l-1 1 3 3-3 3 1 1 4-4-4-4z%27/%3e%3c/svg%3e') no-repeat center center / contain;
                 -webkit-mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M3.5 0l-1 1 3 3-3 3 1 1 4-4-4-4z%27/%3e%3c/svg%3e') no-repeat center center / contain;
             }
-    </style>
 
+
+
+
+
+
+
+        .thumbnail {
+            background-color: #F6F2F2;
+            height: 270px;
+            overflow: hidden;
+            position: relative;
+        }
+
+            .thumbnail img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .thumbnail::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.3); /* Yarı saydam katman */
+                z-index: 1;
+            }
+
+            .thumbnail .caption {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                background: rgba(0, 0, 0, 0.5); /* Yarı saydam arka plan */
+                color: #fff;
+                padding: 5px 10px;
+                width: 100%;
+                box-sizing: border-box;
+                z-index: 2; /* Üst katmanda görünmesi için */
+            }
+    </style>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
@@ -184,8 +227,8 @@
                                 <a class="nav-link" href="/UIContact/Index/">Contact</a>
                             </li>
                         </ul>
-                        <ul class="navbar-nav ml-auto" id="loginUl">
-                            <div class="btn btn-primary border-light m-auto bg-primary loginButon" style="width:120px; color:#40bad5">
+                        <ul class="navbar-nav ml-auto" id="loginUl" style="margin-left:auto">
+                            <div class="btn btn-primary border-light m-auto bg-primary loginButon" style="width:120px; color:#40bad5; position:absolute; right:0">
                                 <a href="/Login/Index/" style="color:white; font-weight:700">Login</a>
                             </div>
                         </ul>
@@ -367,7 +410,22 @@
             document.documentElement.scrollTop = 0;
         }
     </script>
+
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var imageUrlsContainer = document.getElementById('imageUrls');
+            var imageUrls = Array.from(imageUrlsContainer.children).map(function (child) {
+                return child.textContent.trim();
+            });
+
+            var imagesTexts = document.querySelectorAll('.images-text');
+
+            imagesTexts.forEach(function (imagesText, index) {
+                imagesText.style.backgroundImage = 'url(' + imageUrls[index] + ')';
+            });
+        });
+    </script>
+    @* <script>
         document.addEventListener('DOMContentLoaded', () => {
             const texts = [
                 'Text 1',
@@ -424,7 +482,7 @@
             updateContent();
         });
 
-    </script>
+    </script> *@
     <script>
         $(document).ready(function () {
             $('#imageModal').on('show.bs.modal', function (event) {

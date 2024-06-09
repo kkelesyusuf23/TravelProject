@@ -1,7 +1,10 @@
-﻿@{
+﻿@model List<GetHotelsViewModel>
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_UILayout.cshtml";
+    int count = 0;
 }
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 
 @await Component.InvokeAsync("_SliderUIDefaultComponentPartial")
 
@@ -9,7 +12,51 @@
 
 @await Component.InvokeAsync("_TravelDestinationsUIDefaultComponentPartial")
 
-@await Component.InvokeAsync("_FiltreUIDefaultComponentPartial")
+<section class="w3l-covers-18">
+    <div class="container">
+
+        <br />
+        <br />
+        @using (Html.BeginForm("Index", "UIDefault", FormMethod.Post))
+        {
+            <label>Şehir ID Bilgisi Giriniz</label>
+            <input type="text" class="form-control" name="cityID" />
+            <br />
+
+            <label>Check-In Tarihi Giriniz</label>
+            <input type="date" class="form-control" name="checkInDate" />
+            <br />
+
+            <label>Check-Out Tarihi Giriniz</label>
+            <input type="date" class="form-control" name="checkOutDate" />
+            <br />
+
+            <button class="btn btn-primary">Otellleri Listele</button>
+        }
+    </div>
+    <div class="covers-main editContent display-none" >
+        <div class="container">
+            <div class="gallery-image row">
+                @foreach(var item in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="img-box">
+                            <img src="@item.Datum.photoUrls" alt="product" class="img-responsive ">
+                            <h5 class="my-2"><a href="about.html">South Island</a></h5>
+                            <div class="blog-date">
+                                <p class="pos-date"><span class="fa fa-clock-o mr-1"></span>7 Days</p> <p class="pos-date text-right"><span class="fa fa-users mr-1"></span>Max People : 5</p>
+                            </div>
+                            <p class="para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet itaque labor.</p>
+                            <div class="top-gap">
+                                <h5>from $525</h5>
+                                <a href="#url" class="icon text-center"><span class="fa fa-chevron-right"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
 
 @await Component.InvokeAsync("_SliderUIDefaultComponentPartial")
-
