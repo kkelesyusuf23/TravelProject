@@ -1,62 +1,73 @@
-﻿@model List<GetHotelsViewModel>
+﻿@model List<CityTravelProject.PresentationLayer.Models.GetHotelsViewModel.Datum>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_UILayout.cshtml";
-    int count = 0;
 }
-<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 
 @await Component.InvokeAsync("_SliderUIDefaultComponentPartial")
-
 @await Component.InvokeAsync("_CityMapsUIDefaultComponentPartial")
-
 @await Component.InvokeAsync("_TravelDestinationsUIDefaultComponentPartial")
 
-<section class="w3l-covers-18">
+<section class="w3l-covers-18" style="position: relative; background-color:#d9d4d445">
     <div class="container">
+        <br />
+        <br />
+        <div class="col-md-12">
+            <h1 style="text-align:center; margin-bottom:20px;">Otel Arama</h1>
+            <h4 style="text-align:center; margin-bottom:20px;">İhtiyacınıza uygun otelleri buradan arayın.</h4>
+            <hr />
 
-        <br />
-        <br />
-        @using (Html.BeginForm("Index", "UIDefault", FormMethod.Post))
+        </div>
+        @using (Html.BeginForm("Index", "UIDefault", FormMethod.Post, new { id = "hotelForm", @class = "row justify-content-center" }))
         {
-            <label>Şehir ID Bilgisi Giriniz</label>
-            <input type="text" class="form-control" name="cityID" />
-            <br />
-
-            <label>Check-In Tarihi Giriniz</label>
-            <input type="date" class="form-control" name="checkInDate" />
-            <br />
-
-            <label>Check-Out Tarihi Giriniz</label>
-            <input type="date" class="form-control" name="checkOutDate" />
-            <br />
-
-            <button class="btn btn-primary">Otellleri Listele</button>
+            <div class="col-md-6">
+                <label for="checkinDate">Check-In Tarihi</label>
+                <input type="date" id="checkinDate" class="form-control" name="checkinDate" required style="margin-bottom: 10px;" />
+            </div>
+            <div class="col-md-6">
+                <label for="checkoutDate">Check-Out Tarihi</label>
+                <input type="date" id="checkoutDate" class="form-control" name="checkoutDate" required style="margin-bottom: 10px;" />
+            </div>
+            <button type="submit" class="btn btn-primary col-md-12" style="margin-top: 28px;">Otellleri Listele</button>
         }
+        <br />
+        <br />
     </div>
-    <div class="covers-main editContent display-none" >
+
+    <div id="backgroundOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: @(Model.Any() ? "98" : "-1"); display: @(Model.Any() ? "block" : "none");" onclick="closeHotelList()"></div>
+    <div class="covers-main editContent scrollbar" id="hotelList" style="display: @(Model.Any() ? "block" : "none"); position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); max-height: 60vh; overflow-y: auto; z-index: 100;">
         <div class="container">
+            <button type="button" class="close" aria-label="Close" style="position: absolute; top: 10px; right: 10px;" onclick="closeHotelList()">
+                <span aria-hidden="true">&times;</span>
+            </button>
             <div class="gallery-image row">
-                @foreach(var item in Model)
+                @if (Model != null && Model.Any())
                 {
-                    <div class="col-lg-4 col-md-6">
-                        <div class="img-box">
-                            <img src="@item.Datum.photoUrls" alt="product" class="img-responsive ">
-                            <h5 class="my-2"><a href="about.html">South Island</a></h5>
-                            <div class="blog-date">
-                                <p class="pos-date"><span class="fa fa-clock-o mr-1"></span>7 Days</p> <p class="pos-date text-right"><span class="fa fa-users mr-1"></span>Max People : 5</p>
-                            </div>
-                            <p class="para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet itaque labor.</p>
-                            <div class="top-gap">
-                                <h5>from $525</h5>
-                                <a href="#url" class="icon text-center"><span class="fa fa-chevron-right"></span></a>
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4 col-md-6">
+                            <div class="img-box" style="height:350px; margin:5px">
+                                <img src="@item.photoUrls[0]" alt="@item.name" class="img-responsive ">
+                                <h5 class="my-2"><a href="about.html">@item.name</a></h5>
+                                <div class="blog-date">
+                                    <p class="pos-date"><span class="fa fa-clock-o mr-1"></span>@item.checkinDate to @item.checkoutDate</p>
+                                </div>
+                                <div class="top-gap">
+                                    <h5>from @item.priceBreakdown.grossPrice.currency @item.priceBreakdown.grossPrice.value</h5>
+                                    <a href="#url" class="icon text-center"><span class="fa fa-chevron-right"></span></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
+                }
+                else
+                {
+                    <p>Girilen tarihler için otel bulunamadı.</p>
                 }
             </div>
         </div>
     </div>
 </section>
+
 
 @await Component.InvokeAsync("_SliderUIDefaultComponentPartial")

@@ -1,53 +1,29 @@
-﻿@* @model List<GetHotelsViewModel.Result>
-<section class="w3l-covers-18">
-    @{
-        Layout = null;
-        int count = 0;
-    }
-    <div class="container">
+﻿@* @model List<CityTravelProject.PresentationLayer.Models.GetHotelsViewModel.Datum>
 
-        <br />
-        <br />
-        @using (Html.BeginForm("Index", "BookingByCity", FormMethod.Post))
-        {
-
-            <label>Şehir ID Bilgisi Giriniz</label>
-
-            @*#if cityID için değer girmesine olanak sağlar
-            <input type="text" class="form-control" name=cityID />
-            <br />
-            <button class="btn btn-primary">Şehir için Otellleri listele</button>
-        }
-        <tr>
-
-            <th>#</th>
-            <th>Otel Adı</th>
-            <br />
-
-            <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-            <table class="table table-bordered">
-                <th>Otel Puanı</th>
-                <th>Otel Detaylar</th>
-
-        </tr>
+<div class="gallery-image row">
+    @if (Model != null && Model.Any())
+    {
         @foreach (var item in Model)
         {
-            count++;
-
-            <tr>
-                <td>@count</td>
-                <td>@item.name</td>
-                <td>@item.reviewScore</td>
-                <td><a href="/BookingByCity/Index/" class="btn btn-outline-dark">Detaylar</a></td>
-
-            </tr>
+            <div class="col-lg-4 col-md-6">
+                <div class="img-box">
+                    <img src="@item.photoUrls[0]" alt="@item.name" class="img-responsive ">
+                    <h5 class="my-2"><a href="about.html">@item.name</a></h5>
+                    <div class="blog-date">
+                        <p class="pos-date"><span class="fa fa-clock-o mr-1"></span>@item.checkinDate to @item.checkoutDate</p>
+                        <p class="pos-date text-right"><span class="fa fa-users mr-1"></span>Max People : 5</p>
+                    </div>
+                    <p class="para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet itaque labor.</p>
+                    <div class="top-gap">
+                        <h5>from @item.priceBreakdown.grossPrice.currency @item.priceBreakdown.grossPrice.value</h5>
+                        <a href="#url" class="icon text-center"><span class="fa fa-chevron-right"></span></a>
+                    </div>
+                </div>
+            </div>
         }
-
-        </table>
-
-
-
-
-    </div>
-</section>
- *@
+    }
+    else
+    {
+        <p>Girilen tarihler için otel bulunamadı.</p>
+    }
+</div> *@

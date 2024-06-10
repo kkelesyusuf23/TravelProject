@@ -12,6 +12,7 @@
     <link href="//fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
@@ -185,12 +186,14 @@
                 box-sizing: border-box;
                 z-index: 2; /* Üst katmanda görünmesi için */
             }
+
+
     </style>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Font Awesome kit link for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 </head>
 <body id="home">
@@ -391,7 +394,6 @@
         <span class="fa fa-chevron-up"></span>
     </button>
     <script>
-        // When the user scrolls down 20px from the top of the document, show the button
         window.onscroll = function () {
             scrollFunction()
         };
@@ -404,7 +406,6 @@
             }
         }
 
-        // When the user clicks on the button, scroll to the top of the document
         function topFunction() {
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
@@ -425,73 +426,27 @@
             });
         });
     </script>
-    @* <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const texts = [
-                'Text 1',
-                'Text 2',
-                'Text 3'
-            ];
-
-            const imageUrls = [
-                'https://example.com/image1.jpg',
-                'https://example.com/image2.jpg',
-                'https://example.com/image3.jpg'
-            ];
-
-            let currentIndex = 0;
-
-            const textContent = document.getElementById('text-content');
-            const imageBtn = document.getElementById('image-btn');
-            const modal = document.getElementById('image-modal');
-            const modalImage = document.getElementById('modal-image');
-            const closeBtn = document.getElementById('close-btn');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-
-            function updateContent() {
-                textContent.textContent = texts[currentIndex];
-                imageBtn.dataset.imageUrl = imageUrls[currentIndex];
-            }
-
-            imageBtn.addEventListener('click', () => {
-                modal.style.display = 'block';
-                modalImage.src = imageBtn.dataset.imageUrl;
-            });
-
-            closeBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
-            });
-
-            window.addEventListener('click', (event) => {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-
-            prevBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex - 1 + texts.length) % texts.length;
-                updateContent();
-            });
-
-            nextBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex + 1) % texts.length;
-                updateContent();
-            });
-
-            updateContent();
-        });
-
-    </script> *@
+ 
     <script>
         $(document).ready(function () {
             $('#imageModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var imageSrc = button.data('src'); // Extract info from data-* attributes
+                var button = $(event.relatedTarget);
+                var imageSrc = button.data('src');
                 var modal = $(this);
                 modal.find('.modal-body img').attr('src', imageSrc);
             });
         });
+    </script>
+    <script>
+        document.getElementById('hotelForm').addEventListener('submit', function () {
+            document.getElementById('hotelList').style.display = 'block';
+        });
+    </script>
+    <script>
+        function closeHotelList() {
+            document.getElementById('hotelList').style.display = 'none';
+            document.getElementById('backgroundOverlay').style.display = 'none';
+        }
     </script>
 </body>
 </html>
