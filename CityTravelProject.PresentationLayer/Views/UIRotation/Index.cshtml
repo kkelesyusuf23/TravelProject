@@ -1,6 +1,10 @@
-﻿@{
+﻿@using Newtonsoft.Json
+@model List<CityTravelProject.EntityLayer.Concrete.Location>
+
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_UILayout.cshtml";
+    var locationsJson = JsonConvert.SerializeObject(Model);
 }
 
 <section class="w3l-inner-banner-main">
@@ -63,35 +67,20 @@
         var markers = [];
         var routeCoordinates = [];
 
-        // Veritabanından lokasyonları çek
-        try {
-            const locationsResponse = await fetch('/api/Location');
-            if (!locationsResponse.ok) {
-                throw new Error(`HTTP error! status: ${locationsResponse.status}`);
-            }
-            const locationsData = await locationsResponse.json();
+        // Predefined locations
+        var locations = @Html.Raw(locationsJson);
 
-            // Lokasyonlar için marker'lar oluştur
-            locationsData.forEach(location => {
-                const marker = new google.maps.Marker({
-                    position: { lat: location.latitude, lng: location.longitude },
-                    map: map,
-                    title: location.name
-                });
-
-                const infowindow = new google.maps.InfoWindow({
-                    content: `<h5>${location.name}</h5><p>Bu bir kayıtlı lokasyondur.</p>`
-                });
-
-                marker.addListener('click', function () {
-                    infowindow.open(map, marker);
-                });
-
-                markers.push(marker);
+        locations.forEach(function (location) {
+            var marker = new google.maps.Marker({
+                position: { lat: location.Latitude, lng: location.Longitude },
+                map: map,
+                title: location.Name
             });
-        } catch (error) {
-            console.error('Veriler alınırken hata oluştu:', error);
-        }
+
+            marker.addListener('click', function () {
+                addLocationToList(location, marker);
+            });
+        });
 
         // Kullanıcının haritaya tıklayarak konum seçmesi
         map.addListener('click', function (event) {
@@ -107,13 +96,14 @@
                 map: map
             });
 
-            var selectedAddresses = document.getElementById('selectedAddresses');
-            var addressItem = document.createElement('div');
-            addressItem.innerHTML = `Lat: ${latitude}, Lng: ${longitude}`;
-            selectedAddresses.appendChild(addressItem);
+            var location = {
+                Name: "Custom Location",
+                Description: "",
+                Latitude: latitude,
+                Longitude: longitude
+            };
 
-            markers.push(marker);
-            routeCoordinates.push({ lat: latitude, lng: longitude });
+            addLocationToList(location, marker);
         });
 
         // Rotayı çiz
@@ -130,38 +120,73 @@
             }
         });
 
-        // Rotayı kaydet
+        // Save route
         document.getElementById('saveRoute').addEventListener('click', async function () {
-            var routeDetails = markers.map(marker => ({
-                Name: marker.title || "User added location",
-                Latitude: marker.position.lat(),
-                Longitude: marker.position.lng()
-            }));
-
-            var routeData = {
-                RouteName: "Kullanıcı Rotası",
-                Description: "Kullanıcı tarafından oluşturulan rota",
-                RouteDetails: routeDetails
-            };
-
-            try {
-                const response = await fetch('/api/Route', {
+            if (routeCoordinates.length > 1) {
+                var response = await fetch('@Url.Action("SaveRoute", "UIRotation")', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(routeData)
+                    body: JSON.stringify(routeCoordinates)
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                if (response.ok) {
+                    alert("Route saved successfully.");
+                } else {
+                    alert("Failed to save route.");
                 }
-
-                alert('Rota başarılı bir şekilde kaydedildi!');
-            } catch (error) {
-                console.error('Rota kaydedilirken hata oluştu:', error);
+            } else {
+                alert("Lütfen en az iki nokta seçin.");
             }
         });
+
+        function addLocationToList(location, marker) {
+            var selectedAddresses = document.getElementById('selectedAddresses');
+            var existingItems = Array.from(selectedAddresses.children);
+            var existingItem = existingItems.find(item =>
+                item.dataset.latitude == location.Latitude &&
+                item.dataset.longitude == location.Longitude
+            );
+
+            if (existingItem) {
+                // Remove the existing item
+                existingItem.remove();
+            }
+
+            // Create the new list item
+            var addressItem = document.createElement('div');
+            addressItem.className = "address-item";
+            addressItem.dataset.latitude = location.Latitude;
+            addressItem.dataset.longitude = location.Longitude;
+            addressItem.innerHTML = `
+                    Name: ${location.Name}, Description: ${location.Description}, Lat: ${location.Latitude}, Lng: ${location.Longitude}
+                    <button class="btn btn-sm btn-danger remove-btn">Remove</button>
+                `;
+            selectedAddresses.appendChild(addressItem);
+
+            var removeButton = addressItem.querySelector('.remove-btn');
+            removeButton.addEventListener('click', function () {
+                addressItem.remove();
+                marker.setMap(null);
+                var index = routeCoordinates.findIndex(coord => coord.lat === location.Latitude && coord.lng === location.Longitude);
+                if (index > -1) {
+                    routeCoordinates.splice(index, 1);
+                }
+            });
+
+            // Update routeCoordinates
+            var index = routeCoordinates.findIndex(coord => coord.lat === location.Latitude && coord.lng === location.Longitude);
+            if (index > -1) {
+                routeCoordinates.splice(index, 1);
+            }
+            routeCoordinates.push({ lat: location.Latitude, lng: location.Longitude });
+
+            // Add marker to markers array if it's not already there
+            if (!markers.includes(marker)) {
+                markers.push(marker);
+            }
+        }
     }
 
     initMap();

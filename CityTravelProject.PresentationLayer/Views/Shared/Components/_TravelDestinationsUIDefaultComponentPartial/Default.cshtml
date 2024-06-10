@@ -2,39 +2,18 @@
 @{
     int count = 0;
 }
-<!-- HTML içinde image URL'lerini alıp bir liste oluşturun -->
-@* <div id="imageUrls" style="display: none;">
-    @foreach (var item in Model)
-    {
-        <div>@item.ImageURL</div>
-    }
-</div> *@
 
-<section class="w3l-specification-6">
-    @* <div class="specification-layout editContent">
-    <div class="container-fluid">
-    <div class="row text-left img-grids">
-    <div class="col-lg-12 p-0">
-    <div class="four-grids">
-    @foreach (var item in Model)
-    {
-    <div class="images-text">
-    <div class="ser-bg1">
-    <div class="p-md-3 p-3">
-    <h4><a href="#url">@item.Title</a></h4>
-    <p>@item.Description</p>
-    </div>
-    </div>
-    </div>
-    }
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>*@
-    
 
+<section class="w3l-specification-6" style="background-color:rgb(226 213 213 / 51%);">
     <div class="container">
+        <br />
+        <br />
+        <div class="main-titles-head">
+            <h3 class="header-name">
+                Türkiye'nin Güzel Yerleri
+            </h3>
+            <p class="tiltle-para editContent">Türkiye'nin büyüleyici manzaralarına ve eşsiz güzelliklerine bir göz atın.</p>
+        </div>
         <div class="row">
             @foreach (var item in Model)
             {
@@ -54,8 +33,4 @@
             }
         </div>
     </div>
-
-
 </section>
-
-

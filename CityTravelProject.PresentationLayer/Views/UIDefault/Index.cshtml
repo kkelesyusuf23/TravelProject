@@ -12,11 +12,11 @@
     <div class="container">
         <br />
         <br />
-        <div class="col-md-12">
-            <h1 style="text-align:center; margin-bottom:20px;">Otel Arama</h1>
-            <h4 style="text-align:center; margin-bottom:20px;">İhtiyacınıza uygun otelleri buradan arayın.</h4>
-            <hr />
-
+        <div class="main-titles-head">
+            <h3 class="header-name">
+                Otel Arama
+            </h3>
+            <p class="tiltle-para editContent">İhtiyacınıza uygun otelleri buradan arayın.</p>
         </div>
         @using (Html.BeginForm("Index", "UIDefault", FormMethod.Post, new { id = "hotelForm", @class = "row justify-content-center" }))
         {
@@ -34,7 +34,7 @@
         <br />
     </div>
 
-    <div id="backgroundOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: @(Model.Any() ? "98" : "-1"); display: @(Model.Any() ? "block" : "none");" onclick="closeHotelList()"></div>
+    <div id="backgroundOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;  z-index: @(Model.Any() ? "98" : "-1"); display: @(Model.Any() ? "block" : "none");" onclick="closeHotelList()"></div>
     <div class="covers-main editContent scrollbar" id="hotelList" style="display: @(Model.Any() ? "block" : "none"); position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); max-height: 60vh; overflow-y: auto; z-index: 100;">
         <div class="container">
             <button type="button" class="close" aria-label="Close" style="position: absolute; top: 10px; right: 10px;" onclick="closeHotelList()">
