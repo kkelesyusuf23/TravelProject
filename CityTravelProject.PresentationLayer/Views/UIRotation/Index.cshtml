@@ -160,33 +160,34 @@
             addressItem.dataset.latitude = location.Latitude;
             addressItem.dataset.longitude = location.Longitude;
             addressItem.innerHTML = `
-                    Name: ${location.Name}, Description: ${location.Description}, Lat: ${location.Latitude}, Lng: ${location.Longitude}
-                    <button class="btn btn-sm btn-danger remove-btn">Remove</button>
-                `;
+                Name: ${location.Name}, Description: ${location.Description}, Lat: ${location.Latitude}, Lng: ${location.Longitude}
+                <button class="btn btn-sm btn-danger remove-btn">Remove</button>
+            `;
             selectedAddresses.appendChild(addressItem);
 
             var removeButton = addressItem.querySelector('.remove-btn');
             removeButton.addEventListener('click', function () {
                 addressItem.remove();
                 marker.setMap(null);
-                var index = routeCoordinates.findIndex(coord => coord.lat === location.Latitude && coord.lng === location.Longitude);
+                var index = routeCoordinates.findIndex(coord => coord.Latitude === location.Latitude && coord.Longitude === location.Longitude);
                 if (index > -1) {
                     routeCoordinates.splice(index, 1);
                 }
             });
 
             // Update routeCoordinates
-            var index = routeCoordinates.findIndex(coord => coord.lat === location.Latitude && coord.lng === location.Longitude);
+            var index = routeCoordinates.findIndex(coord => coord.Latitude === location.Latitude && coord.Longitude === location.Longitude);
             if (index > -1) {
                 routeCoordinates.splice(index, 1);
             }
-            routeCoordinates.push({ lat: location.Latitude, lng: location.Longitude });
+            routeCoordinates.push(location);
 
             // Add marker to markers array if it's not already there
             if (!markers.includes(marker)) {
                 markers.push(marker);
             }
         }
+
     }
 
     initMap();

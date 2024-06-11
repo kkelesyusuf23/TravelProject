@@ -2,6 +2,7 @@
 using CityTravelProject.DtoLayer.RouteDtos;
 using CityTravelProject.EntityLayer.Concrete;
 using CityTravelProject.PresentationLayer.Dtos.RouteDetailDtos;
+using CityTravelProject.PresentationLayer.Dtos.RouteDtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -33,15 +34,12 @@ namespace CityTravelProject.PresentationLayer.Controllers
                 locations = JsonConvert.DeserializeObject<List<Location>>(jsonData);
             }
 
-            // Serialize the locations list to JSON
             var locationsJson = JsonConvert.SerializeObject(locations);
 
-            // Pass the serialized JSON to the view using ViewBag
             ViewBag.LocationsJson = locationsJson;
 
             return View(locations);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> SaveRoute([FromBody] List<Location> locations)
@@ -53,34 +51,33 @@ namespace CityTravelProject.PresentationLayer.Controllers
 
             try
             {
-                var firstLocation = locations.First();
-                var lastLocation = locations.Last();
+                var firstLocation = locations.FirstOrDefault();
+                var lastLocation = locations.LastOrDefault();
+
+                if (firstLocation == null || lastLocation == null)
+                {
+                    return BadRequest("Insufficient locations provided.");
+                }
+
                 var routeName = $"{firstLocation.Name}{firstLocation.Latitude}_{firstLocation.Longitude}-" +
                                 $"{lastLocation.Name}{lastLocation.Latitude}_{lastLocation.Longitude}";
 
                 var route = new Routes
                 {
                     RouteName = routeName,
-                    Description = string.Empty,
+                    Description = "",
                     CreatedTime = DateTime.Now,
                     Status = true,
-                    RouteDetails = locations.Select((location, index) => new RouteDetail
-                    {
-                        LocationID = location.LocationID,
-                        Order = index + 1,
-                        Status = true
-                    }).ToList()
                 };
 
-                // Save the route and route details to the database
                 var client = _httpClientFactory.CreateClient();
                 var jsonData = JsonConvert.SerializeObject(route);
-                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync("https://localhost:7188/api/Routes", content);
+                StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync("https://localhost:7188/api/Route", content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return Ok();
+                    return RedirectToAction("Index");
                 }
 
                 var errorContent = await response.Content.ReadAsStringAsync();
@@ -88,7 +85,6 @@ namespace CityTravelProject.PresentationLayer.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception (ex) for further analysis
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
