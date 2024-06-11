@@ -7,6 +7,8 @@
     var locationsJson = JsonConvert.SerializeObject(Model);
 }
 
+<link rel="stylesheet" href="sweetalert2.min.css">
+
 <section class="w3l-inner-banner-main">
     <div class="about-inner about editContent">
         <div class="container">
@@ -29,7 +31,7 @@
             <div class="col-md-4 d-flex flex-column justify-content-between align-items-center pl-md-4 right-column" style="height: 60vh; background-color: #f7f7f7; border-radius:1%;border: 1px solid #ece4ec;">
                 <div class="scrollbar" style="position: relative; width: 100%; height: 100%; overflow: auto;">
                     <div id="selectedAddresses" class="mb-3" style="position: relative; z-index: 1;">
-                        <!-- Seçilen adreslerin listesi buraya gelecek -->
+                        <!-- Selected addresses list will be appended here -->
                     </div>
                     <i id="centerIcon" class="fa fa-road" style="font-size: 5em; color: #ccc; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0;"></i>
                 </div>
@@ -41,7 +43,6 @@
         </div>
     </div>
 </section>
-
 <script>
     async function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -82,10 +83,10 @@
             });
         });
 
-        // Kullanıcının haritaya tıklayarak konum seçmesi
+        // User clicks on the map to select a location
         map.addListener('click', function (event) {
             if (!allowedBounds.contains(event.latLng)) {
-                alert("Lütfen izin verilen bölge içinde bir konum seçin.");
+                alert("Please select a location within the allowed bounds.");
                 return;
             }
 
@@ -106,7 +107,7 @@
             addLocationToList(location, marker);
         });
 
-        // Rotayı çiz
+        // Draw route
         document.getElementById('drawRoute').addEventListener('click', function () {
             if (routeCoordinates.length > 1) {
                 var start = routeCoordinates[0];
@@ -116,7 +117,7 @@
                 var url = `https://www.google.com/maps/dir/?api=1&origin=${start.Latitude},${start.Longitude}&destination=${end.Latitude},${end.Longitude}&waypoints=${waypoints}&travelmode=driving`;
                 window.open(url, '_blank');
             } else {
-                alert("Lütfen en az iki nokta seçin.");
+                alert("Please select at least two points.");
             }
         });
 
@@ -133,20 +134,22 @@
                     });
 
                     if (response.ok) {
-                        alert("Rotanız başarıyla kaydedildi.");
-                        location.reload(); // Sayfayı yenile
+                        alert("Your route has been successfully saved.");
+                        location.reload(); // Refresh the page
                     } else {
                         var errorText = await response.text();
-                        alert("Rotanızı kaydederken bir hata oluştu: " + errorText);
+                        console.error("Error response:", errorText); // Hata mesajını günlüğe kaydet
+                        alert("An error occurred while saving your route: " + errorText);
                     }
                 } catch (error) {
-                    console.error("Bir hata oluştu:", error);
-                    alert("Bir hata oluştu, konsola bakın.");
+                    console.error("An error occurred:", error); // Hata mesajını günlüğe kaydet
+                    alert("An error occurred, check the console.");
                 }
             } else {
-                alert("Lütfen en az iki nokta seçin.");
+                alert("Please select at least two points.");
             }
         });
+
 
 
         function addLocationToList(location, marker) {
@@ -168,9 +171,9 @@
             addressItem.dataset.latitude = location.Latitude;
             addressItem.dataset.longitude = location.Longitude;
             addressItem.innerHTML = `
-                        Name: ${location.Name}, Description: ${location.Description}, Lat: ${location.Latitude}, Lng: ${location.Longitude}
-                        <button class="btn btn-sm btn-danger remove-btn">Remove</button>
-                    `;
+                    Name: ${location.Name}, Description: ${location.Description}, Lat: ${location.Latitude}, Lng: ${location.Longitude}
+                    <button class="btn btn-sm btn-danger remove-btn">Remove</button>
+                `;
             selectedAddresses.appendChild(addressItem);
 
             var removeButton = addressItem.querySelector('.remove-btn');
@@ -195,10 +198,9 @@
                 markers.push(marker);
             }
         }
-
     }
 
     initMap();
 </script>
-
+<script src="sweetalert2.min.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZpnj0Vt7cFAHZtUAQnpPCoqz6J5eokM8&callback=initMap"></script>
