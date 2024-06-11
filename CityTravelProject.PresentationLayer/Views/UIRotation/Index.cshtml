@@ -111,9 +111,9 @@
             if (routeCoordinates.length > 1) {
                 var start = routeCoordinates[0];
                 var end = routeCoordinates[routeCoordinates.length - 1];
-                var waypoints = routeCoordinates.slice(1, routeCoordinates.length - 1).map(coord => `${coord.lat},${coord.lng}`).join('|');
+                var waypoints = routeCoordinates.slice(1, routeCoordinates.length - 1).map(coord => `${coord.Latitude},${coord.Longitude}`).join('|');
 
-                var url = `https://www.google.com/maps/dir/?api=1&origin=${start.lat},${start.lng}&destination=${end.lat},${end.lng}&waypoints=${waypoints}&travelmode=driving`;
+                var url = `https://www.google.com/maps/dir/?api=1&origin=${start.Latitude},${start.Longitude}&destination=${end.Latitude},${end.Longitude}&waypoints=${waypoints}&travelmode=driving`;
                 window.open(url, '_blank');
             } else {
                 alert("Lütfen en az iki nokta seçin.");
@@ -123,7 +123,7 @@
         // Save route
         document.getElementById('saveRoute').addEventListener('click', async function () {
             if (routeCoordinates.length > 1) {
-                var response = await fetch('@Url.Action("SaveRoute", "UIRotation")', {
+                var response = await fetch('Url.Action("SaveRoute", "UIRotation")', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -134,7 +134,8 @@
                 if (response.ok) {
                     alert("Route saved successfully.");
                 } else {
-                    alert("Failed to save route.");
+                    var errorText = await response.text();
+                    alert("Failed to save route: " + errorText);
                 }
             } else {
                 alert("Lütfen en az iki nokta seçin.");
@@ -160,9 +161,9 @@
             addressItem.dataset.latitude = location.Latitude;
             addressItem.dataset.longitude = location.Longitude;
             addressItem.innerHTML = `
-                Name: ${location.Name}, Description: ${location.Description}, Lat: ${location.Latitude}, Lng: ${location.Longitude}
-                <button class="btn btn-sm btn-danger remove-btn">Remove</button>
-            `;
+                    Name: ${location.Name}, Description: ${location.Description}, Lat: ${location.Latitude}, Lng: ${location.Longitude}
+                    <button class="btn btn-sm btn-danger remove-btn">Remove</button>
+                `;
             selectedAddresses.appendChild(addressItem);
 
             var removeButton = addressItem.querySelector('.remove-btn');

@@ -59,13 +59,13 @@ namespace CityTravelProject.PresentationLayer.Controllers
                     return BadRequest("Insufficient locations provided.");
                 }
 
-                var routeName = $"{firstLocation.Name}{firstLocation.Latitude}_{firstLocation.Longitude}-" +
-                                $"{lastLocation.Name}{lastLocation.Latitude}_{lastLocation.Longitude}";
-
+                var routeName = $"{firstLocation.Name}_{lastLocation.Name}";
+                                
+                var routeDescription = $"{firstLocation.Latitude}_{firstLocation.Longitude}/{lastLocation.Latitude}_{lastLocation.Longitude}";
                 var route = new Routes
                 {
                     RouteName = routeName,
-                    Description = "",
+                    Description = routeDescription,
                     CreatedTime = DateTime.Now,
                     Status = true,
                 };
