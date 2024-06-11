@@ -1,8 +1,4 @@
-﻿using CityTravelProject.BusinessLayer.Abstract;
-using CityTravelProject.DtoLayer.RouteDtos;
-using CityTravelProject.EntityLayer.Concrete;
-using CityTravelProject.PresentationLayer.Dtos.RouteDetailDtos;
-using CityTravelProject.PresentationLayer.Dtos.RouteDtos;
+﻿using CityTravelProject.EntityLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -60,7 +56,7 @@ namespace CityTravelProject.PresentationLayer.Controllers
                 }
 
                 var routeName = $"{firstLocation.Name}_{lastLocation.Name}";
-                                
+
                 var routeDescription = $"{firstLocation.Latitude}_{firstLocation.Longitude}/{lastLocation.Latitude}_{lastLocation.Longitude}";
                 var route = new Routes
                 {

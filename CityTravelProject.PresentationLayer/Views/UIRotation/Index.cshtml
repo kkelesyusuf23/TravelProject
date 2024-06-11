@@ -123,24 +123,31 @@
         // Save route
         document.getElementById('saveRoute').addEventListener('click', async function () {
             if (routeCoordinates.length > 1) {
-                var response = await fetch('Url.Action("SaveRoute", "UIRotation")', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(routeCoordinates)
-                });
+                try {
+                    var response = await fetch('/UIRotation/SaveRoute', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(routeCoordinates)
+                    });
 
-                if (response.ok) {
-                    alert("Route saved successfully.");
-                } else {
-                    var errorText = await response.text();
-                    alert("Failed to save route: " + errorText);
+                    if (response.ok) {
+                        alert("Rotanız başarıyla kaydedildi.");
+                        location.reload(); // Sayfayı yenile
+                    } else {
+                        var errorText = await response.text();
+                        alert("Rotanızı kaydederken bir hata oluştu: " + errorText);
+                    }
+                } catch (error) {
+                    console.error("Bir hata oluştu:", error);
+                    alert("Bir hata oluştu, konsola bakın.");
                 }
             } else {
                 alert("Lütfen en az iki nokta seçin.");
             }
         });
+
 
         function addLocationToList(location, marker) {
             var selectedAddresses = document.getElementById('selectedAddresses');
@@ -161,9 +168,9 @@
             addressItem.dataset.latitude = location.Latitude;
             addressItem.dataset.longitude = location.Longitude;
             addressItem.innerHTML = `
-                    Name: ${location.Name}, Description: ${location.Description}, Lat: ${location.Latitude}, Lng: ${location.Longitude}
-                    <button class="btn btn-sm btn-danger remove-btn">Remove</button>
-                `;
+                        Name: ${location.Name}, Description: ${location.Description}, Lat: ${location.Latitude}, Lng: ${location.Longitude}
+                        <button class="btn btn-sm btn-danger remove-btn">Remove</button>
+                    `;
             selectedAddresses.appendChild(addressItem);
 
             var removeButton = addressItem.querySelector('.remove-btn');
