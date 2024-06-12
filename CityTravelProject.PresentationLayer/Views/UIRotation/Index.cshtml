@@ -68,19 +68,48 @@
         var markers = [];
         var routeCoordinates = [];
 
+        // Polyline options
+        var polylineOptions = {
+            path: [],
+            strokeColor: '#D2B48C', // Açık kahverengi
+            strokeOpacity: 1.0,
+            strokeWeight: 3
+        };
+        var polyline = new google.maps.Polyline(polylineOptions);
+        polyline.setMap(map);
+
         // Predefined locations
         var locations = @Html.Raw(locationsJson);
+
+        var customIcon = {
+            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" // Mavi işaretleyici URL'si
+        };
+
+        var circleIcon = {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 5,
+            fillColor: "#FFF", // Sarı renk
+            fillOpacity: 1,
+            strokeWeight: 1
+        };
+
+        var redIcon = {
+            url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png" // Kırmızı işaretleyici URL'si
+        };
 
         locations.forEach(function (location) {
             var marker = new google.maps.Marker({
                 position: { lat: location.Latitude, lng: location.Longitude },
                 map: map,
-                title: location.Name
+                title: location.Name,
+                icon: customIcon
             });
 
             marker.addListener('click', function () {
                 addLocationToList(location, marker);
             });
+
+            markers.push(marker);
         });
 
         // User clicks on the map to select a location
@@ -94,7 +123,8 @@
             var longitude = event.latLng.lng();
             var marker = new google.maps.Marker({
                 position: { lat: latitude, lng: longitude },
-                map: map
+                map: map,
+                icon: circleIcon // Kullanıcı seçimi için küçük sarı işaretleyici
             });
 
             var location = {
@@ -150,8 +180,6 @@
             }
         });
 
-
-
         function addLocationToList(location, marker) {
             var selectedAddresses = document.getElementById('selectedAddresses');
             var existingItems = Array.from(selectedAddresses.children);
@@ -179,11 +207,13 @@
             var removeButton = addressItem.querySelector('.remove-btn');
             removeButton.addEventListener('click', function () {
                 addressItem.remove();
-                marker.setMap(null);
                 var index = routeCoordinates.findIndex(coord => coord.Latitude === location.Latitude && coord.Longitude === location.Longitude);
                 if (index > -1) {
                     routeCoordinates.splice(index, 1);
                 }
+                marker.setIcon(customIcon); // Mavi işaretleyiciye dönüştür
+                updateMarkers();
+                updatePolyline();
             });
 
             // Update routeCoordinates
@@ -193,14 +223,44 @@
             }
             routeCoordinates.push(location);
 
-            // Add marker to markers array if it's not already there
-            if (!markers.includes(marker)) {
-                markers.push(marker);
+            // Update marker icons and polyline
+            updateMarkers();
+            updatePolyline();
+        }
+
+        function updateMarkers() {
+            // First reset all markers to blue
+            markers.forEach(marker => {
+                marker.setIcon(customIcon);
+            });
+
+            // Set all selected locations to small yellow circle icon
+            routeCoordinates.forEach((location, index) => {
+                var marker = markers.find(marker => marker.getPosition().lat() === location.Latitude && marker.getPosition().lng() === location.Longitude);
+                if (marker) {
+                    marker.setIcon(circleIcon);
+                }
+            });
+
+            // Set the last selected location to red icon
+            if (routeCoordinates.length > 0) {
+                var lastLocation = routeCoordinates[routeCoordinates.length - 1];
+                var lastMarker = markers.find(marker => marker.getPosition().lat() === lastLocation.Latitude && marker.getPosition().lng() === lastLocation.Longitude);
+                if (lastMarker) {
+                    lastMarker.setIcon(redIcon);
+                }
             }
+        }
+
+        function updatePolyline() {
+            var path = routeCoordinates.map(coord => new google.maps.LatLng(coord.Latitude, coord.Longitude));
+            polyline.setPath(path);
         }
     }
 
     initMap();
+
+
 </script>
 <script src="sweetalert2.min.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZpnj0Vt7cFAHZtUAQnpPCoqz6J5eokM8&callback=initMap"></script>

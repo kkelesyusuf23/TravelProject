@@ -91,52 +91,50 @@ namespace CityTravelProject.PresentationLayer.Controllers
 
                 // Kaydedilen Route'un ID'sini al
                 var routeResponse = await client.GetAsync($"https://localhost:7188/api/Route?routeName={routeName}");
-                if (routeResponse.IsSuccessStatusCode)
-                {
-                    var jsonDataRoute = await routeResponse.Content.ReadAsStringAsync();
-                    var routeListFromApi = JsonConvert.DeserializeObject<List<Routes>>(jsonDataRoute);
-                    var routeFromApi = routeListFromApi?.FirstOrDefault();
-                    var routeId = routeFromApi?.RoutesID ?? 0;
-
-                    if (routeId == 0)
-                    {
-                        return StatusCode(500, "Route ID is zero, could not save route.");
-                    }
-
-                    // Route Detail'ları oluştur
-                    var routeDetails = new List<RouteDetail>();
-                    foreach (var location in locations)
-                    {
-                        var routeDetail = new RouteDetail
-                        {
-                            RoutesID = routeId,
-                            LocationID = location.LocationID,
-                            Order = locations.IndexOf(location) + 1, // Sıra numarasını belirle
-                            Status = true,
-                        };
-                        routeDetails.Add(routeDetail);
-                    }
-
-                    // Route Detail'ları API'ye gönder
-                    foreach (var routeDetail in routeDetails)
-                    {
-                        var routeDetailJson = JsonConvert.SerializeObject(routeDetail);
-                        var routeDetailContent = new StringContent(routeDetailJson, Encoding.UTF8, "application/json");
-                        var routeDetailResponse = await client.PostAsync("https://localhost:7188/api/RouteDetail", routeDetailContent);
-
-                        if (!routeDetailResponse.IsSuccessStatusCode)
-                        {
-                            var errorContent = await routeDetailResponse.Content.ReadAsStringAsync();
-                            return StatusCode((int)routeDetailResponse.StatusCode, errorContent);
-                        }
-                    }
-
-                    return Ok("Route and RouteDetails saved successfully.");
-                }
-                else
+                if (!routeResponse.IsSuccessStatusCode)
                 {
                     return StatusCode((int)routeResponse.StatusCode, "Failed to retrieve route from the API.");
                 }
+
+                var jsonDataRoute = await routeResponse.Content.ReadAsStringAsync();
+                var routeListFromApi = JsonConvert.DeserializeObject<List<Routes>>(jsonDataRoute);
+                var routeFromApi = routeListFromApi?.LastOrDefault();
+                var routeId = routeFromApi?.RoutesID ?? 0;
+
+                if (routeId == 0)
+                {
+                    return StatusCode(500, "Route ID is zero, could not save route.");
+                }
+
+                // Route Detail'ları oluştur
+                var routeDetails = new List<RouteDetail>();
+                foreach (var location in locations)
+                {
+                    var routeDetail = new RouteDetail
+                    {
+                        RoutesID = routeId,
+                        LocationID = location.LocationID,
+                        Order = locations.IndexOf(location) + 1, // Sıra numarasını belirle
+                        Status = true,
+                    };
+                    routeDetails.Add(routeDetail);
+                }
+
+                // Route Detail'ları API'ye gönder
+                foreach (var routeDetail in routeDetails)
+                {
+                    var routeDetailJson = JsonConvert.SerializeObject(routeDetail);
+                    var routeDetailContent = new StringContent(routeDetailJson, Encoding.UTF8, "application/json");
+                    var routeDetailResponse = await client.PostAsync("https://localhost:7188/api/RouteDetail", routeDetailContent);
+
+                    if (!routeDetailResponse.IsSuccessStatusCode)
+                    {
+                        var errorContent = await routeDetailResponse.Content.ReadAsStringAsync();
+                        return StatusCode((int)routeDetailResponse.StatusCode, errorContent);
+                    }
+                }
+
+                return Ok("Route and RouteDetails saved successfully.");
             }
             catch (JsonException jsonEx)
             {
@@ -147,6 +145,5 @@ namespace CityTravelProject.PresentationLayer.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
     }
 }
