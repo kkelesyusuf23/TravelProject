@@ -1,8 +1,10 @@
-﻿using CityTravelProject.EntityLayer.Concrete;
+﻿using CityTravelProject.BusinessLayer.Abstract;
+using CityTravelProject.EntityLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,6 +77,7 @@ namespace CityTravelProject.PresentationLayer.Controllers
                     Status = true,
                 };
 
+                // Route'u kaydet
                 var client = _httpClientFactory.CreateClient();
                 var jsonData = JsonConvert.SerializeObject(route);
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -86,9 +89,54 @@ namespace CityTravelProject.PresentationLayer.Controllers
                     return StatusCode((int)response.StatusCode, errorContent);
                 }
 
-                
+                // Kaydedilen Route'un ID'sini al
+                var routeResponse = await client.GetAsync($"https://localhost:7188/api/Route?routeName={routeName}");
+                if (routeResponse.IsSuccessStatusCode)
+                {
+                    var jsonDataRoute = await routeResponse.Content.ReadAsStringAsync();
+                    var routeListFromApi = JsonConvert.DeserializeObject<List<Routes>>(jsonDataRoute);
+                    var routeFromApi = routeListFromApi?.FirstOrDefault();
+                    var routeId = routeFromApi?.RoutesID ?? 0;
 
-                return Ok("Route and RouteDetails saved successfully.");
+                    if (routeId == 0)
+                    {
+                        return StatusCode(500, "Route ID is zero, could not save route.");
+                    }
+
+                    // Route Detail'ları oluştur
+                    var routeDetails = new List<RouteDetail>();
+                    foreach (var location in locations)
+                    {
+                        var routeDetail = new RouteDetail
+                        {
+                            RoutesID = routeId,
+                            LocationID = location.LocationID,
+                            Order = locations.IndexOf(location) + 1, // Sıra numarasını belirle
+                            Status = true,
+                        };
+                        routeDetails.Add(routeDetail);
+                    }
+
+                    // Route Detail'ları API'ye gönder
+                    foreach (var routeDetail in routeDetails)
+                    {
+                        var routeDetailJson = JsonConvert.SerializeObject(routeDetail);
+                        var routeDetailContent = new StringContent(routeDetailJson, Encoding.UTF8, "application/json");
+                        var routeDetailResponse = await client.PostAsync("https://localhost:7188/api/RouteDetail", routeDetailContent);
+
+                        if (!routeDetailResponse.IsSuccessStatusCode)
+                        {
+                            var errorContent = await routeDetailResponse.Content.ReadAsStringAsync();
+                            return StatusCode((int)routeDetailResponse.StatusCode, errorContent);
+                        }
+                    }
+
+                    return Ok("Route and RouteDetails saved successfully.");
+                }
+                else
+                {
+                    return StatusCode((int)routeResponse.StatusCode, "Failed to retrieve route from the API.");
+                }
             }
             catch (JsonException jsonEx)
             {
@@ -99,5 +147,6 @@ namespace CityTravelProject.PresentationLayer.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
     }
 }
