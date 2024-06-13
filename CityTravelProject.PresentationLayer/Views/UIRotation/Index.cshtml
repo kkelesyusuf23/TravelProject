@@ -117,9 +117,9 @@
             if (!allowedBounds.contains(event.latLng)) {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Warning!',
-                    text: 'Please select a location within the allowed bounds.',
-                    confirmButtonText: 'OK'
+                    title: 'Uyarı!',
+                    text: 'Lütfen izin verilen sınırlar içinde bir konum seçin.',
+                    confirmButtonText: 'Tamam'
                 });
                 return;
             }
@@ -154,9 +154,9 @@
             } else {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Warning!',
-                    text: 'Please select at least two points.',
-                    confirmButtonText: 'OK'
+                    title: 'Uyarı!',
+                    text: 'Lütfen en az iki nokta seçin.',
+                    confirmButtonText: 'Tamam'
                 });
             }
         });
@@ -176,9 +176,9 @@
                     if (response.ok) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Success!',
-                            text: 'Your route has been successfully saved.',
-                            confirmButtonText: 'OK'
+                            title: 'Başarılı!',
+                            text: 'Rotanız başarıyla kaydedildi.',
+                            confirmButtonText: 'Tamam'
                         }).then(() => {
                             location.reload(); // Sayfayı yenile
                         });
@@ -186,25 +186,25 @@
                         var errorText = await response.text();
                         Swal.fire({
                             icon: 'error',
-                            title: 'Error!',
-                            text: 'An error occurred while saving your route: ' + errorText,
-                            confirmButtonText: 'OK'
+                            title: 'Hata!',
+                            text: 'Rotanız kaydedilirken bir hata oluştu: ' + errorText,
+                            confirmButtonText: 'Tamam'
                         });
                     }
                 } catch (error) {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error!',
-                        text: 'An error occurred, check the console.',
-                        confirmButtonText: 'OK'
+                        title: 'Hata!',
+                        text: 'Bir hata oluştu, konsolu kontrol edin.',
+                        confirmButtonText: 'Tamam'
                     });
                 }
             } else {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Warning!',
-                    text: 'Please select at least two points.',
-                    confirmButtonText: 'OK'
+                    title: 'Uyarı!',
+                    text: 'Lütfen en az iki nokta seçin.',
+                    confirmButtonText: 'Tamam'
                 });
             }
         });
@@ -228,9 +228,12 @@
             addressItem.dataset.latitude = location.Latitude;
             addressItem.dataset.longitude = location.Longitude;
             addressItem.innerHTML = `
-                    Name: ${location.Name}, Description: ${location.Description}, Lat: ${location.Latitude}, Lng: ${location.Longitude}
-                    <button class="btn btn-sm btn-danger remove-btn">Remove</button>
-                `;
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="margin-left:10px"><b>${location.Name}</b>, Enlem: ${location.Latitude}, Boylam: ${location.Longitude}</div>
+                <div><button class="btn btn-sm btn-danger remove-btn">Remove</button></div>
+            </div>
+        `;
+
             selectedAddresses.appendChild(addressItem);
 
             var removeButton = addressItem.querySelector('.remove-btn');

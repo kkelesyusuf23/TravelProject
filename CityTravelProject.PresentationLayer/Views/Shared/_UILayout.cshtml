@@ -19,7 +19,7 @@
         /* Kaydırma çubuğu stilleri */
         .scrollbar {
             overflow-y: auto;
-            max-height: calc(60vh - 100px);
+            max-height: calc(60vh - 46px);
             padding: 10px;
             scrollbar-width: thin; /* Mozilla Firefox için */
             scrollbar-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0); /* Mozilla Firefox için */
@@ -185,6 +185,16 @@
                 width: 100%;
                 box-sizing: border-box;
                 z-index: 2; /* Üst katmanda görünmesi için */
+            }
+
+        .address-item {
+            margin-bottom: 3px;
+            background-color: #f0f0f0;
+        }
+
+            .address-item .remove-btn {
+                margin-left: 10px;
+                margin-right: 10px;
             }
 
     </style>
