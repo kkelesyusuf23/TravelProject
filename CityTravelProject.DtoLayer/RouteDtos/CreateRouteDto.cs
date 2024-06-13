@@ -8,6 +8,7 @@ namespace CityTravelProject.DtoLayer.RouteDtos
 {
     public class CreateRouteDto
     {
+        public int AppUserID { get; set; }
         public string RouteName { get; set; }
         public string Description { get; set; }
     }

@@ -79,8 +79,8 @@
                 <th>Latitude</th>
                 <th>Longitude</th>
                 <th>Photo</th>
-                <th>User</th>
-                <th>Sil</th>
+@*                 <th>User</th>
+ *@                <th>Sil</th>
                 <th>Güncelle</th>
             </tr>
             @foreach (var item in Model)
@@ -95,8 +95,8 @@
                     <th>
                         <i class="fas fa-image icon" onclick="showImage('@item.PhotoURL')"></i>
                     </th>
-                    <th>@item.AppUserId</th>
-                    <th><a href="/AdminLocation/DeleteLocation/@item.LocationID" class="btn btn-outline-danger">Sil</a></th>
+@*                     <th>@item.AppUserId</th>
+ *@                    <th><a href="/AdminLocation/DeleteLocation/@item.LocationID" class="btn btn-outline-danger">Sil</a></th>
                     <th><a href="/AdminLocation/UpdateLocation/@item.LocationID" class="btn btn-outline-success">Güncelle</a></th>
                 </tr>
             }

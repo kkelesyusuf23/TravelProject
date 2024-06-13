@@ -15,8 +15,8 @@ namespace CityTravelProject.EntityLayer.Concrete
         public float Longitude { get; set; }
         public string PhotoURL { get; set; }
         public bool Status { get; set; }
-        public int AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
+        //public int AppUserId { get; set; }
+        //public AppUser AppUser { get; set; }
         public List<RouteDetail> RouteDetails { get; set; }
     }
 }

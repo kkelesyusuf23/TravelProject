@@ -27,6 +27,8 @@ namespace CityTravelProject.API.Controllers
         {
             Routes route = new Routes()
             {
+                //AppUserID = createRouteDto.AppUserID,
+                AppUserID = 1,
                 RouteName = createRouteDto.RouteName,
                 Description = createRouteDto.Description,
                 CreatedTime = DateTime.Now,
@@ -54,6 +56,8 @@ namespace CityTravelProject.API.Controllers
             Routes route = new Routes()
             {
                 RoutesID = updateRouteDto.RoutesID,
+                //AppUserID = updateRouteDto.AppUserID,
+                AppUserID = 1,
                 RouteName = updateRouteDto.RouteName,
                 Description = updateRouteDto.Description,
                 Status = updateRouteDto.Status

@@ -11,6 +11,6 @@ namespace CityTravelProject.PresentationLayer.Dtos.LocationDtos
         public float Longitude { get; set; }
         public string PhotoURL { get; set; }
         public bool Status { get; set; }
-        public int AppUserId { get; set; }
+        //public int AppUserId { get; set; }
     }
 }
