@@ -115,7 +115,12 @@
         // User clicks on the map to select a location
         map.addListener('click', function (event) {
             if (!allowedBounds.contains(event.latLng)) {
-                alert("Please select a location within the allowed bounds.");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Warning!',
+                    text: 'Please select a location within the allowed bounds.',
+                    confirmButtonText: 'OK'
+                });
                 return;
             }
 
@@ -147,7 +152,12 @@
                 var url = `https://www.google.com/maps/dir/?api=1&origin=${start.Latitude},${start.Longitude}&destination=${end.Latitude},${end.Longitude}&waypoints=${waypoints}&travelmode=driving`;
                 window.open(url, '_blank');
             } else {
-                alert("Please select at least two points.");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Warning!',
+                    text: 'Please select at least two points.',
+                    confirmButtonText: 'OK'
+                });
             }
         });
 
@@ -164,19 +174,38 @@
                     });
 
                     if (response.ok) {
-                        alert("Your route has been successfully saved.");
-                        location.reload(); // Refresh the page
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Your route has been successfully saved.',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            location.reload(); // Sayfayı yenile
+                        });
                     } else {
                         var errorText = await response.text();
-                        console.error("Error response:", errorText); // Hata mesajını günlüğe kaydet
-                        alert("An error occurred while saving your route: " + errorText);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'An error occurred while saving your route: ' + errorText,
+                            confirmButtonText: 'OK'
+                        });
                     }
                 } catch (error) {
-                    console.error("An error occurred:", error); // Hata mesajını günlüğe kaydet
-                    alert("An error occurred, check the console.");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'An error occurred, check the console.',
+                        confirmButtonText: 'OK'
+                    });
                 }
             } else {
-                alert("Please select at least two points.");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Warning!',
+                    text: 'Please select at least two points.',
+                    confirmButtonText: 'OK'
+                });
             }
         });
 
@@ -264,3 +293,8 @@
 </script>
 <script src="sweetalert2.min.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZpnj0Vt7cFAHZtUAQnpPCoqz6J5eokM8&callback=initMap"></script>
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
