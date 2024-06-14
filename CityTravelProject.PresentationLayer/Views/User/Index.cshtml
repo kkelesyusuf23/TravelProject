@@ -1,0 +1,17 @@
+﻿@model CityTravelProject.PresentationLayer.Models.UserProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+
+<h1>Kullanıcı Profili</h1>
+
+<div>
+    <h2>@Model.UserName</h2>
+    <p>Ad: @Model.Name</p>
+    <p>Soyad: @Model.Surname</p>
+    <p>E-posta: @Model.Email</p>
+    <p>Şehir: @Model.City</p>
+    <p>Doğum Günü: @Model.BirthDay.ToString("dd MMMM yyyy")</p>
+</div>

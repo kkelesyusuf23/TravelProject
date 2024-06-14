@@ -1,10 +1,12 @@
 ﻿using CityTravelProject.EntityLayer.Concrete;
 using CityTravelProject.PresentationLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CityTravelProject.PresentationLayer.Controllers
 {
+    //[Authorize]
     public class RoleAssignController : Controller
     {
         private readonly RoleManager<AppRole> _roleManager;

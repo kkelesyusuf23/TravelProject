@@ -19,15 +19,29 @@ namespace CityTravelProject.PresentationLayer.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Index(LoginViewModel model)//loginviewmodel(username,password) olmasının sebebi tüm 									      appuser tablosundaki verileri kullanmamış olmak
+        public async Task<IActionResult> Index(LoginViewModel model)//loginviewmodel(username,password) olmasının sebebi tüm appuser tablosundaki verileri kullanmamış olmak
         {
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "AdminLocation");
+                bool isLoggedIn = User.Identity.IsAuthenticated;
+                ViewData["IsLoggedIn"] = isLoggedIn;
+
+                if (isLoggedIn)
+                {
+                    ViewData["AppUserName"] = User.Identity.Name; // Kullanıcı adını al
+                }
+                return RedirectToAction("Index", "UIDefault");
             }
             return View();
+        }
+
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "UIDefault");
         }
     }
 }

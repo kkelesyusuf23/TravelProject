@@ -1,11 +1,13 @@
 ﻿using CityTravelProject.PresentationLayer.Dtos.CityMapsDtos;
 using CityTravelProject.PresentationLayer.Dtos.ContactDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CityTravelProject.PresentationLayer.Controllers
 {
+    //[Authorize]
     public class AdminContactController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

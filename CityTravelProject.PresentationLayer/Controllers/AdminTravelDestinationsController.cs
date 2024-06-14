@@ -1,11 +1,13 @@
 ﻿using CityTravelProject.PresentationLayer.Dtos.FutureDtos;
 using CityTravelProject.PresentationLayer.Dtos.TravelDestinationsDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CityTravelProject.PresentationLayer.Controllers
 {
+    //[Authorize]
     public class AdminTravelDestinationsController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

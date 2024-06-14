@@ -1,5 +1,7 @@
 ﻿@{
     Layout = null;
+    bool isLoggedIn = ViewData["IsLoggedIn"] != null && (bool)ViewData["IsLoggedIn"];
+    string appUserName = isLoggedIn ? ViewData["AppUserName"].ToString() : "";
 }
 <!doctype html>
 <html lang="en">
@@ -239,11 +241,33 @@
                                 <a class="nav-link" href="/UIContact/Index/">Contact</a>
                             </li>
                         </ul>
-                        <ul class="navbar-nav ml-auto" id="loginUl" style="margin-left:auto">
-                            <div class="btn btn-primary border-light m-auto bg-primary loginButon" style="width:120px; color:#40bad5; position:absolute; right:0">
-                                <a href="/Login/Index/" style="color:white; font-weight:700">Login</a>
+                        
+                       @*  <ul class="navbar-nav ml-auto" id="loginUl" style="margin-left:auto; display:flex; gap:10px;">
+                            <div class="btn btn-primary border-light m-auto  loginButon" style="width:120px; background-color:#40bad5;">
+                                <a href="/Login/Index/" style="color:white; font-weight:700; display:block; text-align:center;">Login</a>
+                            </div>
+                            <div class="btn btn-primary border-light m-auto loginButon" style="width:120px; background-color:#40bad5;">
+                                Hoşgeldiniz (AppUserName)
+                            </div>
+                            <div class="btn btn-primary border-light m-auto loginButon" style="width:120px; background-color:#40bad5;">
+                                <a href="/Login/Logout/" style="color:white; font-weight:700; display:block; text-align:center;">Çıkış Yap</a>
+                            </div>
+                        </ul> *@
+                        <ul>
+                            <div class="d-lg-block d-none">
+                                @if (isLoggedIn)
+                                {
+                                    <button onclick="window.location.href='/Account/Profile';" class="btn btn-style btn-secondary">Hoşgeldiniz @appUserName</button>
+                                    <button onclick="window.location.href='/Login/Logout';" class="btn btn-style btn-primary ml-lg-3">Çıkış Yap</button>
+                                }
+                                else
+                                {
+                                    <button onclick="window.location.href='/Login/Index';" class="btn btn-style btn-primary ml-lg-3">Login</button>
+                                }
                             </div>
                         </ul>
+
+
                     </div>
                     <!-- toggle switch for light and dark theme -->
                     @* <div class="mobile-position">
