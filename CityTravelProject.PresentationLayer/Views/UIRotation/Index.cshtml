@@ -5,6 +5,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_UILayout.cshtml";
     var locationsJson = JsonConvert.SerializeObject(Model);
+    var isAuthenticated = User.Identity.IsAuthenticated;
 }
 
 <link rel="stylesheet" href="sweetalert2.min.css">
@@ -36,7 +37,14 @@
                     <i id="centerIcon" class="fa fa-road" style="font-size: 5em; color: #ccc; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0;"></i>
                 </div>
                 <div class="mb-3">
-                    <button class="btn btn-outline-success" id="saveRoute"><i class="fa-solid fa-download fa-2x"></i></button>
+                    @if (isAuthenticated)
+                    {
+                        <button class="btn btn-outline-success" id="saveRoute"><i class="fa-solid fa-download fa-2x"></i></button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-outline-success" id="saveRoute" hidden><i class="fa-solid fa-download fa-2x"></i></button>
+                    }
                     <button class="btn btn-outline-primary" id="drawRoute"><i class="fa-solid fa-route fa-2x"></i></button>
                 </div>
             </div>
@@ -228,11 +236,11 @@
             addressItem.dataset.latitude = location.Latitude;
             addressItem.dataset.longitude = location.Longitude;
             addressItem.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="margin-left:10px"><b>${location.Name}</b>, Enlem: ${location.Latitude}, Boylam: ${location.Longitude}</div>
-                <div><button class="btn btn-sm btn-danger remove-btn">Remove</button></div>
-            </div>
-        `;
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="margin-left:10px"><b>${location.Name}</b>, Enlem: ${location.Latitude}, Boylam: ${location.Longitude}</div>
+                    <div><button class="btn btn-sm btn-danger remove-btn">Remove</button></div>
+                </div>
+            `;
 
             selectedAddresses.appendChild(addressItem);
 
@@ -291,13 +299,11 @@
     }
 
     initMap();
-
-
 </script>
+
 <script src="sweetalert2.min.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZpnj0Vt7cFAHZtUAQnpPCoqz6J5eokM8&callback=initMap"></script>
 <!-- SweetAlert2 CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
-
 <!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>

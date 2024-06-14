@@ -13,13 +13,15 @@ namespace CityTravelProject.PresentationLayer.Controllers
         {
             _signInManager = signInManager;
         }
+
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
+
         [HttpPost]
-        public async Task<IActionResult> Index(LoginViewModel model)//loginviewmodel(username,password) olmasının sebebi tüm appuser tablosundaki verileri kullanmamış olmak
+        public async Task<IActionResult> Index(LoginViewModel model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
 
@@ -30,17 +32,21 @@ namespace CityTravelProject.PresentationLayer.Controllers
 
                 if (isLoggedIn)
                 {
-                    ViewData["AppUserName"] = User.Identity.Name; // Kullanıcı adını al
+                    ViewData["AppUserName"] = model.UserName; // Use the username from the model
                 }
+
                 return RedirectToAction("Index", "UIDefault");
             }
+
             return View();
         }
-
 
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            ViewData["IsLoggedIn"] = false;
+            ViewData["AppUserName"] = null;
+
             return RedirectToAction("Index", "UIDefault");
         }
     }

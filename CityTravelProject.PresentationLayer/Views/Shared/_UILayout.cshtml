@@ -242,30 +242,33 @@
                             </li>
                         </ul>
                         
-                       @*  <ul class="navbar-nav ml-auto" id="loginUl" style="margin-left:auto; display:flex; gap:10px;">
+                        @* <ul class="navbar-nav ml-auto" id="loginUl" style="margin-left:auto; display:flex; gap:10px;">
                             <div class="btn btn-primary border-light m-auto  loginButon" style="width:120px; background-color:#40bad5;">
                                 <a href="/Login/Index/" style="color:white; font-weight:700; display:block; text-align:center;">Login</a>
                             </div>
-                            <div class="btn btn-primary border-light m-auto loginButon" style="width:120px; background-color:#40bad5;">
+                            <div class="btn btn-primary border-light m-auto loginButon" style="width:120px; background-color:#40bad5;" hidden>
                                 Hoşgeldiniz (AppUserName)
                             </div>
-                            <div class="btn btn-primary border-light m-auto loginButon" style="width:120px; background-color:#40bad5;">
+                            <div class="btn btn-primary border-light m-auto loginButon" style="width:120px; background-color:#40bad5;" hidden>
                                 <a href="/Login/Logout/" style="color:white; font-weight:700; display:block; text-align:center;">Çıkış Yap</a>
                             </div>
                         </ul> *@
-                        <ul>
-                            <div class="d-lg-block d-none">
-                                @if (isLoggedIn)
-                                {
-                                    <button onclick="window.location.href='/Account/Profile';" class="btn btn-style btn-secondary">Hoşgeldiniz @appUserName</button>
-                                    <button onclick="window.location.href='/Login/Logout';" class="btn btn-style btn-primary ml-lg-3">Çıkış Yap</button>
-                                }
-                                else
-                                {
-                                    <button onclick="window.location.href='/Login/Index';" class="btn btn-style btn-primary ml-lg-3">Login</button>
-                                }
-                            </div>
-                        </ul>
+                        <div class="top-quote mr-lg-2 text-center" style="margin-left:auto;">
+                            <ul class="navbar-nav mx-lg-auto">
+                                <li id="Login" class="nav-item">
+                                    <a class="nav-link" href="/Login/Index/">Giriş Yap</a>
+                                </li>
+                                <li id="userDropdown" class="nav-item dropdown" style="display:none;">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        @appUserName
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="/User/Index/">Profil</a>
+                                        <a class="dropdown-item" href="/Login/Logout/">Çıkış Yap</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
 
 
                     </div>
