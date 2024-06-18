@@ -1,7 +1,8 @@
-﻿using CityTravelProject.EntityLayer.Concrete;
-using CityTravelProject.PresentationLayer.Models;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using CityTravelProject.EntityLayer.Concrete;
+using CityTravelProject.PresentationLayer.Models; // AppUser entity
 
 namespace CityTravelProject.PresentationLayer.Controllers
 {
@@ -23,22 +24,25 @@ namespace CityTravelProject.PresentationLayer.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(LoginViewModel model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
-
-            if (result.Succeeded)
+            if (ModelState.IsValid)
             {
-                bool isLoggedIn = User.Identity.IsAuthenticated;
-                ViewData["IsLoggedIn"] = isLoggedIn;
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
 
-                if (isLoggedIn)
+                if (result.Succeeded)
                 {
-                    ViewData["AppUserName"] = model.UserName; // Use the username from the model
+                    // Authentication successful, set ViewData for the view
+                    ViewData["IsLoggedIn"] = true;
+
+                    return RedirectToAction("Index", "UIDefault"); // Redirect to your home/index page
                 }
 
-                return RedirectToAction("Index", "UIDefault");
+                // If login fails, add an error to ModelState
+                ModelState.AddModelError(string.Empty, "Invalid login attempt");
             }
 
-            return View();
+            // If ModelState is invalid or login fails, return the view with errors
+            ViewData["IsLoggedIn"] = false;
+            return View(model);
         }
 
         public async Task<IActionResult> Logout()

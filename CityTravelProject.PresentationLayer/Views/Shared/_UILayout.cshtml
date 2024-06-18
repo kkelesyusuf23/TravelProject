@@ -1,14 +1,34 @@
 ﻿@{
     Layout = null;
-    bool isLoggedIn = ViewData["IsLoggedIn"] != null && (bool)ViewData["IsLoggedIn"];
-    string appUserName = isLoggedIn ? ViewData["AppUserName"].ToString() : "";
+    bool isLoggedIn = (bool)(ViewData["IsLoggedIn"] ?? false);
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şehir İçi Gezi</title>
+
+    <!-- CSS bağlantıları -->
+    <link rel="stylesheet" href="~/ui/assets/css/style-starter.css">
+    <link href="//fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- JavaScript bağlantıları -->
+    <script src="https://ajax.googleapis.com/ajax/lib
+
+
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Şehir İçi Gezi</title>
+
     <link rel="stylesheet" href="~/ui/assets/css/style-starter.css">
     <link href="//fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="//fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
@@ -17,189 +37,194 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
     <style>
-        /* Kaydırma çubuğu stilleri */
-        .scrollbar {
-            overflow-y: auto;
-            max-height: calc(60vh - 46px);
-            padding: 10px;
-            scrollbar-width: thin; /* Mozilla Firefox için */
-            scrollbar-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0); /* Mozilla Firefox için */
-        }
+/* Kaydırma çubuğu stilleri */
+.scrollbar {
+    overflow-y: auto;
+    max-height: calc(60vh - 46px);
+    padding: 10px;
+    scrollbar-width: thin; /* Mozilla Firefox için */
+    scrollbar-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0); /* Mozilla Firefox için */
+}
 
-            .scrollbar::-webkit-scrollbar {
-                width: 3px; /* Google Chrome ve Safari için */
-            }
+    .scrollbar::-webkit-scrollbar {
+        width: 3px; /* Google Chrome ve Safari için */
+    }
 
-            .scrollbar::-webkit-scrollbar-thumb {
-                background-color: rgba(0, 0, 0, 0.5); /* Kaydırma çubuğu rengi */
-                border-radius: 3px; /* Kaydırma çubuğu kenar yarıçapı */
-            }
+    .scrollbar::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.5); /* Kaydırma çubuğu rengi */
+        border-radius: 3px; /* Kaydırma çubuğu kenar yarıçapı */
+    }
 
-            .scrollbar::-webkit-scrollbar-track {
-                background-color: rgba(0, 0, 0, 0); /* Kaydırma çubuğu yolunun rengi */
-            }
-
-
-        #selectedAddresses div {
-            padding: 5px 0; /* Üst ve alt boşluk */
-        }
+    .scrollbar::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0); /* Kaydırma çubuğu yolunun rengi */
+    }
 
 
-        .slider-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .slider-btn {
-            background-color: #f1f1f1;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        .slider-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 70%;
-        }
-
-        .text-content {
-            flex: 1;
-            margin-right: 10px;
-        }
-
-        .image-btn {
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        .image-modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.9);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .modal-content {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-        }
-
-        .custom-control-prev,
-        .custom-control-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background-color: rgba(23, 162, 184, 0.5);
-            border-radius: 50%;
-        }
-
-        .custom-control-prev {
-            left: -75px;
-        }
-
-        .custom-control-next {
-            right: -75px;
-        }
-
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            background-image: none;
-        }
-
-            .carousel-control-prev-icon::after,
-            .carousel-control-next-icon::after {
-                content: '';
-                display: inline-block;
-                width: 30px;
-                height: 30px;
-                background-color: white;
-                mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M4.5 0l-4 4 4 4 1-1-3-3 3-3-1-1z%27/%3e%3c/svg%3e') no-repeat center center / contain;
-                -webkit-mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M4.5 0l-4 4 4 4 1-1-3-3 3-3-1-1z%27/%3e%3c/svg%3e') no-repeat center center / contain;
-            }
-
-            .carousel-control-next-icon::after {
-                mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M3.5 0l-1 1 3 3-3 3 1 1 4-4-4-4z%27/%3e%3c/svg%3e') no-repeat center center / contain;
-                -webkit-mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M3.5 0l-1 1 3 3-3 3 1 1 4-4-4-4z%27/%3e%3c/svg%3e') no-repeat center center / contain;
-            }
+#selectedAddresses div {
+    padding: 5px 0; /* Üst ve alt boşluk */
+}
 
 
+.slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.slider-btn {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.slider-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+}
+
+.text-content {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.image-btn {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+.custom-control-prev,
+.custom-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background-color: rgba(23, 162, 184, 0.5);
+    border-radius: 50%;
+}
+
+.custom-control-prev {
+    left: -75px;
+}
+
+.custom-control-next {
+    right: -75px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-image: none;
+}
+
+    .carousel-control-prev-icon::after,
+    .carousel-control-next-icon::after {
+        content: '';
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-color: white;
+        mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M4.5 0l-4 4 4 4 1-1-3-3 3-3-1-1z%27/%3e%3c/svg%3e') no-repeat center center / contain;
+        -webkit-mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M4.5 0l-4 4 4 4 1-1-3-3 3-3-1-1z%27/%3e%3c/svg%3e') no-repeat center center / contain;
+    }
+
+    .carousel-control-next-icon::after {
+        mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M3.5 0l-1 1 3 3-3 3 1 1 4-4-4-4z%27/%3e%3c/svg%3e') no-repeat center center / contain;
+        -webkit-mask: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27%23000%27 viewBox=%270 0 8 8%27%3e%3cpath d=%27M3.5 0l-1 1 3 3-3 3 1 1 4-4-4-4z%27/%3e%3c/svg%3e') no-repeat center center / contain;
+    }
 
 
 
 
 
-        .thumbnail {
-            background-color: #F6F2F2;
-            height: 270px;
-            overflow: hidden;
-            position: relative;
-        }
 
-            .thumbnail img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
 
-            .thumbnail::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.3); /* Yarı saydam katman */
-                z-index: 1;
-            }
+.thumbnail {
+    background-color: #F6F2F2;
+    height: 270px;
+    overflow: hidden;
+    position: relative;
+}
 
-            .thumbnail .caption {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                background: rgba(0, 0, 0, 0.5); /* Yarı saydam arka plan */
-                color: #fff;
-                padding: 5px 10px;
-                width: 100%;
-                box-sizing: border-box;
-                z-index: 2; /* Üst katmanda görünmesi için */
-            }
+    .thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
-        .address-item {
-            margin-bottom: 3px;
-            background-color: #f0f0f0;
-        }
+    .thumbnail::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3); /* Yarı saydam katman */
+        z-index: 1;
+    }
 
-            .address-item .remove-btn {
-                margin-left: 10px;
-                margin-right: 10px;
-            }
+    .thumbnail .caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.5); /* Yarı saydam arka plan */
+        color: #fff;
+        padding: 5px 10px;
+        width: 100%;
+        box-sizing: border-box;
+        z-index: 2; /* Üst katmanda görünmesi için */
+    }
 
-    </style>
+.address-item {
+    margin-bottom: 3px;
+    background-color: #f0f0f0;
+}
+
+    .address-item .remove-btn {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+</style>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
@@ -229,47 +254,34 @@
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                         <ul class="navbar-nav ml-lg-5">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/UIDefault/Index/">Home <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/UIDefault/Index/">Anasayfa <span class="sr-only">(current)</span></a>
                             </li>
-                            <li class="nav-item @@about__active">
-                                <a class="nav-link" href="/UIRotation/Index/">Rotation</a>
+                            <li class="nav-item about__active">
+                                <a class="nav-link" href="/UIRotation/Index/">Rotasyon</a>
                             </li>
-                            <li class="nav-item @@about__active">
-                                <a class="nav-link" href="/UIAbout/Index/">About</a>
+                            <li class="nav-item about__active">
+                                <a class="nav-link" href="/UIAbout/Index/">Hakkımızda</a>
                             </li>
-                            <li class="nav-item @@contact__active">
-                                <a class="nav-link" href="/UIContact/Index/">Contact</a>
+                            <li class="nav-item contact__active">
+                                <a class="nav-link" href="/UIContact/Index/">İletişim</a>
                             </li>
                         </ul>
-                        
-                        @* <ul class="navbar-nav ml-auto" id="loginUl" style="margin-left:auto; display:flex; gap:10px;">
-                            <div class="btn btn-primary border-light m-auto  loginButon" style="width:120px; background-color:#40bad5;">
-                                <a href="/Login/Index/" style="color:white; font-weight:700; display:block; text-align:center;">Login</a>
-                            </div>
-                            <div class="btn btn-primary border-light m-auto loginButon" style="width:120px; background-color:#40bad5;" hidden>
-                                Hoşgeldiniz (AppUserName)
-                            </div>
-                            <div class="btn btn-primary border-light m-auto loginButon" style="width:120px; background-color:#40bad5;" hidden>
-                                <a href="/Login/Logout/" style="color:white; font-weight:700; display:block; text-align:center;">Çıkış Yap</a>
-                            </div>
-                        </ul> *@
-                        <div class="top-quote mr-lg-2 text-center" style="margin-left:auto;">
-                            <ul class="navbar-nav mx-lg-auto">
-                                <li id="Login" class="nav-item">
-                                    <a class="nav-link" href="/Login/Index/">Giriş Yap</a>
-                                </li>
-                                <li id="userDropdown" class="nav-item dropdown" style="display:none;">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        @appUserName
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="/User/Index/">Profil</a>
-                                        <a class="dropdown-item" href="/Login/Logout/">Çıkış Yap</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
 
+
+                        <ul class="navbar-nav ml-auto" id="loginUl" style="margin-left:auto; display:flex; gap:10px;">
+                            @if (isLoggedIn)
+                            {
+                                <div class="btn btn-primary border-light m-auto" id="logoutButton" style="width:120px; background-color:#40bad5;">
+                                    <a href="/Login/Logout/" style="color:white; font-weight:700; display:block; text-align:center;">Çıkış Yap</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="btn btn-primary border-light m-auto" id="loginButton" style="width:120px; background-color:#40bad5;">
+                                    <a href="/Login/Index/" style="color:white; font-weight:700; display:block; text-align:center;">Giriş Yap</a>
+                                </div>
+                            }
+</ul>
 
                     </div>
                     <!-- toggle switch for light and dark theme -->
@@ -287,77 +299,77 @@
     <script src="~/ui/assets/js/jquery-3.3.1.min.js"></script>
     <script src="~/ui/assets/js/bootstrap.min.js"></script>
     <script>
-        $(window).on("scroll", function () {
-            var scroll = $(window).scrollTop();
+$(window).on("scroll", function () {
+    var scroll = $(window).scrollTop();
 
-            if (scroll >= 80) {
-                $("#site-header").addClass("nav-fixed");
-            } else {
-                $("#site-header").removeClass("nav-fixed");
-            }
-        });
+    if (scroll >= 80) {
+        $("#site-header").addClass("nav-fixed");
+    } else {
+        $("#site-header").removeClass("nav-fixed");
+    }
+});
 
-        //Main navigation Active Class Add Remove
-        $(".navbar-toggler").on("click", function () {
-            $("header").toggleClass("active");
-        });
-        $(document).on("ready", function () {
-            if ($(window).width() > 991) {
-                $("header").removeClass("active");
-            }
-            $(window).on("resize", function () {
-                if ($(window).width() > 991) {
-                    $("header").removeClass("active");
-                }
-            });
-        });
-    </script>
+//Main navigation Active Class Add Remove
+$(".navbar-toggler").on("click", function () {
+    $("header").toggleClass("active");
+});
+$(document).on("ready", function () {
+    if ($(window).width() > 991) {
+        $("header").removeClass("active");
+    }
+    $(window).on("resize", function () {
+        if ($(window).width() > 991) {
+            $("header").removeClass("active");
+        }
+    });
+});
+</script>
     <script>
-        $(function () {
-            $('.navbar-toggler').click(function () {
-                $('body').toggleClass('noscroll');
-            })
-        });
-    </script>
+$(function () {
+    $('.navbar-toggler').click(function () {
+        $('body').toggleClass('noscroll');
+    })
+});
+</script>
     <script>
-        const bodyElement = document.querySelector('body');
-        const themeToggle = document.querySelector('#themeToggle');
-        const darkModeMql = window.matchMedia('(prefers-color-scheme: light)');
+const bodyElement = document.querySelector('body');
+const themeToggle = document.querySelector('#themeToggle');
+const darkModeMql = window.matchMedia('(prefers-color-scheme: light)');
 
-        const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : userPreference(darkModeMql);
+const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : userPreference(darkModeMql);
 
-        if (currentTheme) {
-            bodyElement.classList.add(currentTheme);
+if (currentTheme) {
+    bodyElement.classList.add(currentTheme);
 
-            if (currentTheme === 'dark') {
-                themeToggle.checked = true;
-            }
-        }
+    if (currentTheme === 'dark') {
+        themeToggle.checked = true;
+    }
+}
 
-        function userPreference(e) {
-            if (e.matches) {
-                bodyElement.classList.add("dark");
-                return "dark"
-            } else {
-                bodyElement.classList.remove("dark");
-                return ""
-            }
-        }
+function userPreference(e) {
+    if (e.matches) {
+        bodyElement.classList.add("dark");
+        return "dark"
+    } else {
+        bodyElement.classList.remove("dark");
+        return ""
+    }
+}
 
-        darkModeMql.addListener(userPreference);
+darkModeMql.addListener(userPreference);
 
-        function themeSwitcher(e) {
-            if (e.target.checked) {
-                bodyElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                bodyElement.classList.remove('dark');
-                localStorage.setItem('theme', '');
-            }
-        }
+function themeSwitcher(e) {
+    if (e.target.checked) {
+        bodyElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        bodyElement.classList.remove('dark');
+        localStorage.setItem('theme', '');
+    }
+}
 
-        themeToggle.addEventListener('change', themeSwitcher);
-    </script>
+themeToggle.addEventListener('change', themeSwitcher);
+</script>
 
     @RenderBody()
 
@@ -430,60 +442,62 @@
         <span class="fa fa-chevron-up"></span>
     </button>
     <script>
-        window.onscroll = function () {
-            scrollFunction()
-        };
+window.onscroll = function () {
+    scrollFunction()
+};
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                document.getElementById("movetop").style.display = "block";
-            } else {
-                document.getElementById("movetop").style.display = "none";
-            }
-        }
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("movetop").style.display = "block";
+    } else {
+        document.getElementById("movetop").style.display = "none";
+    }
+}
 
-        function topFunction() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var imageUrlsContainer = document.getElementById('imageUrls');
-            var imageUrls = Array.from(imageUrlsContainer.children).map(function (child) {
-                return child.textContent.trim();
-            });
-
-            var imagesTexts = document.querySelectorAll('.images-text');
-
-            imagesTexts.forEach(function (imagesText, index) {
-                imagesText.style.backgroundImage = 'url(' + imageUrls[index] + ')';
-            });
-        });
-    </script>
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
 
     <script>
-        $(document).ready(function () {
-            $('#imageModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget);
-                var imageSrc = button.data('src');
-                var modal = $(this);
-                modal.find('.modal-body img').attr('src', imageSrc);
-            });
-        });
-    </script>
+document.addEventListener('DOMContentLoaded', function () {
+    var imageUrlsContainer = document.getElementById('imageUrls');
+    var imageUrls = Array.from(imageUrlsContainer.children).map(function (child) {
+        return child.textContent.trim();
+    });
+
+    var imagesTexts = document.querySelectorAll('.images-text');
+
+    imagesTexts.forEach(function (imagesText, index) {
+        imagesText.style.backgroundImage = 'url(' + imageUrls[index] + ')';
+    });
+});
+</script>
+
     <script>
-        document.getElementById('hotelForm').addEventListener('submit', function () {
-            document.getElementById('hotelList').style.display = 'block';
-        });
-    </script>
+$(document).ready(function () {
+    $('#imageModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var imageSrc = button.data('src');
+        var modal = $(this);
+        modal.find('.modal-body img').attr('src', imageSrc);
+    });
+});
+</script>
     <script>
-        function closeHotelList() {
-            document.getElementById('hotelList').style.display = 'none';
-            document.getElementById('backgroundOverlay').style.display = 'none';
-        }
-    </script>
+document.getElementById('hotelForm').addEventListener('submit', function () {
+    document.getElementById('hotelList').style.display = 'block';
+});
+</script>
+    <script>
+function closeHotelList() {
+    document.getElementById('hotelList').style.display = 'none';
+    document.getElementById('backgroundOverlay').style.display = 'none';
+}
+</script>
+
+
 </body>
 </html>
 
