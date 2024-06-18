@@ -3,25 +3,6 @@
     bool isLoggedIn = (bool)(ViewData["IsLoggedIn"] ?? false);
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Şehir İçi Gezi</title>
-
-    <!-- CSS bağlantıları -->
-    <link rel="stylesheet" href="~/ui/assets/css/style-starter.css">
-    <link href="//fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="//fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- JavaScript bağlantıları -->
-    <script src="https://ajax.googleapis.com/ajax/lib
-
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -41,9 +22,41 @@
     <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <!-- CSS bağlantıları -->
+        <link rel="stylesheet" href="~/ui/assets/css/style-starter.css">
+        <link href="//fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+        <link href="//fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 
+        <!-- JavaScript bağlantıları -->
+        <!-- SweetAlert2 CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+
+        <!-- SweetAlert2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
     <style>
-/* Kaydırma çubuğu stilleri */
+    .social_7 .fa {
+    font-size: 24px; /* İkonların boyutunu ayarlayın */
+  }
+.team-content-page .row {
+    display: flex;
+    justify-content: center; /* Sütunları yatayda ortalar */
+    align-items: stretch; /* Sütun yüksekliklerini eşitler */
+}
+
+.team-content-page .column {
+    margin-bottom: 30px; /* İsteğe bağlı: Sütunlar arasına boşluk ekler */
+}
+
+    .team-content-page .column img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        height: auto;
+    }
+
 .scrollbar {
     overflow-y: auto;
     max-height: calc(60vh - 46px);
@@ -496,6 +509,45 @@ function closeHotelList() {
     document.getElementById('backgroundOverlay').style.display = 'none';
 }
 </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('.btn-contact').addEventListener('click', function (event) {
+                event.preventDefault(); // Formun otomatik olarak submit olmasını engelle
+
+                var form = document.querySelector('form');
+                var formData = new FormData(form);
+
+                // AJAX ile form verilerini gönder
+                fetch('/UIContact/Index', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: 'Mesaj başarılı bir şekilde gönderilmiştir.',
+                                confirmButtonText: 'Tamam'
+                            });
+                            form.reset(); // Formu sıfırla
+                        } else {
+                            throw new Error('Network response was not ok.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'An error occurred while sending your message.',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+            });
+        });
+    </script>
 
 
 </body>

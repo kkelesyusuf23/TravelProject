@@ -1,4 +1,4 @@
-﻿
+﻿@model CityTravelProject.PresentationLayer.Dtos.ContactDtos.CreateContactDto
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_UILayout.cshtml";
@@ -10,9 +10,9 @@
 		<div class="about-inner contact">
 			<div class="breadcrumbs-sub">
 				<ul class="breadcrumbs-custom-path">
-					<li class="right-side propClone"><a href="index.html" class="editContent">Home <span class="fa fa-angle-right" aria-hidden="true"></span></a> <p></li>
+					<li class="right-side propClone"><a href="index.html" class="editContent">Ana Sayfa <span class="fa fa-angle-right" aria-hidden="true"></span></a> <p></li>
 					<li class="active editContent">
-						Contact
+						İletişim
 					</li>
 				</ul>
 			</div>
@@ -24,16 +24,16 @@
 		<div class="contact-sec	editContent">
 			<div class="container">
 				<div class="map-content-9 mb-5 ">
-					<form action="//sendmail.w3layouts.com/submitForm" method="post">
+					<form method="post">
 						<div class="twice-two">
-							<input type="text" class="form-control" name="w3lName" id="w3lName" placeholder="Name" required="">
-							<input type="email" class="form-control" name="w3lSender" id="w3lSender" placeholder="Email" required="">
-							<input type="text" class="form-control" name="w3lSubject" id="w3lSubject" placeholder="Subject" required="">
+							<input type="text" asp-for="Name" class="form-control" name="Name" id="w3lName" placeholder="Name" required="">
+							<input type="email" asp-for=Email class="form-control" name="Email" id="w3lSender" placeholder="Email" required="">
+							<input type="text" asp-for="Subject" class="form-control" name="Subject" id="w3lSubject" placeholder="Subject" required="">
 						</div>
-						<textarea name="w3lMessage" class="form-control" id="w3lMessage" placeholder="Message" required=""></textarea>
+						<textarea name="Message" asp-for="Message" class="form-control" id="w3lMessage" placeholder="Message" required=""></textarea>
 
 						<div class="text-right">
-							<button type="submit" class="btn btn-contact">Send Message</button>
+							<button type="submit" class="btn btn-contact">Gönder</button>
 						</div>
 					</form>
 				</div>
@@ -41,14 +41,14 @@
 				<div class="d-grid contact-view">
 
 					<div class="cont-details">
-						<h3 class="sub-title">Quick Contact</h3>
-						<p class="para mt-3 mb-4">Consectetur adipisicing elit.Lorem ipsum dolor sit amet Dignissimos commodi laborum.</p>
+					<h3 class="sub-title">Bize Ulaşın</h3>
+					<p class="para mt-3 mb-4">Sorularınız mı var? Bizimle iletişime geçmekten çekinmeyin! Size yardımcı olmak için buradayız. İletişim formumuzu kullanarak bize mesaj gönderebilir veya doğrudan aşağıdaki iletişim bilgilerimizden bizimle iletişime geçebilirsiniz. Size en kısa sürede yanıt vereceğiz.</p>
 						<div class="cont-top">
 							<div class="cont-left text-center">
 								<span class="fa fa-phone text-secondary"></span>
 							</div>
 							<div class="cont-right">
-								<p class="para"><a href="tel:+44 99 555 42">+123 45 67 89</a></p>
+								<p class="para"><a href="tel:+44 99 555 42">+90 0538 333 33 33</a></p>
 							</div>
 						</div>
 						<div class="cont-top margin-up">
@@ -56,7 +56,7 @@
 								<span class="fa fa-envelope-o text-secondary"></span>
 							</div>
 							<div class="cont-right">
-								<p class="para"><a href="mailto:example@mail.com" class="mail">example@mail.com</a></p>
+								<p class="para"><a href="mailto:example@mail.com" class="mail">kkelesyusuf23@gmail.com</a></p>
 							</div>
 						</div>
 						<div class="cont-top margin-up">
@@ -65,9 +65,7 @@
 							</div>
 							<div class="cont-right">
 								<p class="para">
-									California, #32841 block,
-									<br> #221DRS 75 West Rock,
-									<br> Maple Building, UK.
+									Pendik/İstanbul
 								</p>
 							</div>
 						</div>
@@ -81,3 +79,4 @@
 			</div>
 		</div>
 	</section>
+
