@@ -1,14 +1,39 @@
-# CityTravelProject
+# Şehir İçi Gezi Projesi
 
-Bu proje, Türkiye genelinde şehir içi gezi planlamasını kolaylaştırmayı amaçlayan interaktif bir web uygulamasının tasarımı ve geliştirilmesini ele almaktadır. Kullanıcılar, harita üzerinde istedikleri konumları seçebilme, rotalarını oluşturma ve bu rotaları yönetme imkanına sahiptir.
+Bu proje, Türkiye genelinde şehir içi gezi planlamasını kolaylaştırmayı amaçlayan interaktif bir web uygulamasıdır. Kullanıcılar, harita üzerinde konumları seçebilir, rotalarını oluşturabilir ve bu rotaları Google Haritalar API entegrasyonu ile görselleştirebilir. Ayrıca, kullanıcılar oluşturdukları rotaları kaydedebilir ve yönetebilir.
 
-## Özellikler
-Kullanıcılar, harita üzerinde istedikleri destinasyonları seçebilir ve bu destinasyonlar arasında rota oluşturabilir.
-Google Haritalar API entegrasyonu sayesinde oluşturulan rotalar görselleştirilebilir.
-Kullanıcılar oluşturdukları rotaları kaydedebilir, güncelleyebilir ve paylaşabilir.
-Yönetici kullanıcılar, site yönetim paneli üzerinden veritabanı işlemleri (CRUD) gerçekleştirebilir ve site içeriğini düzenleyebilir.
-## Teknik Altyapı
-Mimari: N-tier mimari kullanılarak geliştirilmiştir.
-Backend: ASP.NET Core framework'ü ve MVC tasarım deseni ile entegre edilmiştir.
-Veritabanı: Entity Framework Core ile veritabanı işlemleri yönetilmektedir.
-Kullanıcı Arayüzü: Bootstrap ve JavaScript kütüphaneleri ile zenginleştirilmiş modern bir kullanıcı deneyimi sunmaktadır.
+## Proje Amacı
+
+Bu projenin amacı, şehir içi gezilerin daha verimli ve keyifli hale getirilmesini sağlamaktır. Kullanıcıların harita üzerinde istedikleri konumları seçmelerine, rotalarını oluşturmalarına ve bu rotaları yönetmelerine olanak tanır. Ayrıca, kullanıcılar oluşturdukları rotaları kaydedebilir, güncelleyebilir ve paylaşabilirler.
+
+## Kullanıcı Kategorileri
+
+- **Misafir Kullanıcılar**: Siteyi gezebilir, harita üzerinde rotalar oluşturabilir ve bu rotaları Google Maps üzerinde görselleştirebilir.
+- **Giriş Yapmış Kullanıcılar**: Oluşturdukları rotaları kaydedebilir ve daha sonra yönetebilirler.
+- **Yönetici Kullanıcılar**: Site yönetim paneli üzerinden tüm veritabanı tabloları için CRUD işlemleri yapabilir ve site içeriğini düzenleyebilirler.
+
+## Kullanılan Teknolojiler
+
+- **ASP.NET Core**: Framework
+- **MVC**: Model-View-Controller tasarım deseni
+- **Entity Framework Core**: Veri erişim katmanı
+- **Bootstrap ve JavaScript**: Kullanıcı arayüzü
+- **Google Maps API**: Harita ve rota entegrasyonu
+- **Rapid API**: API entegrasyonu
+
+## Proje Mimarisi
+
+Proje, N-tier mimari yapısı üzerine inşa edilmiştir:
+- **Sunum Katmanı**: Kullanıcı arayüzü, ASP.NET Core MVC kullanılarak geliştirilmiştir.
+- **İş Mantığı Katmanı**: Uygulamanın iş kurallarını ve mantığını içerir.
+- **Veri Erişim Katmanı**: Veritabanı işlemleri gerçekleştirilir.
+- **DTO Katmanı**: Veri transferi için kullanılan nesneleri tanımlar.
+- **Varlık Katmanı**: Uygulamanın veri modellerini tanımlar.
+
+## Kullanıcı Arayüzü
+
+- **UI (Kullanıcı Arayüzü)**: Şehir içi gezi rotalarını, lokasyonları ve diğer bilgileri görüntüleyin.
+- **Admin Paneli**: Yönetimsel işlemler için ayrı bir arayüz sağlar. Rotalar, lokasyonlar ve diğer yönetimsel veriler burada eklenir, güncellenir ve silinir.
+
+
+
