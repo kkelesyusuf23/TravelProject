@@ -30,6 +30,9 @@ Proje, N-tier mimari yapısı üzerine inşa edilmiştir:
 - **DTO**: Veri transferi için kullanılan nesneleri tanımlar.
 - **Entity**: Uygulamanın veri modellerini tanımlar.
 
+## RelationShip Database
+![Ekran görüntüsü 2024-07-11 021744](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/0ff2858c-a557-490c-b42a-674e86137b7f)
+
 ## Kullanıcı Arayüzü
 
 ## Default
@@ -39,6 +42,7 @@ Proje, N-tier mimari yapısı üzerine inşa edilmiştir:
 ![Ekran görüntüsü 2024-07-11 015417](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/ded93c20-9bae-4567-8c1b-d918193218ab)
 ![Ekran görüntüsü 2024-07-11 015443](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/3266fae0-2b3f-4b59-9a34-5cb60525e852)
 ![Ekran görüntüsü 2024-07-11 015158](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/03dbe6a7-241a-470a-a532-6cea4ef72f44)
+
 ## Swagger
 ![Ekran görüntüsü 2024-07-11 015216](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/39b355c5-d05d-4737-99b4-f1162848344e)
 
@@ -49,7 +53,6 @@ Proje, N-tier mimari yapısı üzerine inşa edilmiştir:
 ![Ekran görüntüsü 2024-07-11 020105](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/a078298b-cc61-4c86-8da6-4f0e9e9a7b28)
 ![Ekran görüntüsü 2024-07-11 020128](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/e5bd21b2-c420-47fa-a76e-90b9c6198c14)
 ![Ekran görüntüsü 2024-07-11 020153](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/f2c1a872-e484-4149-9e55-c9b49da35cf5)
-
 
 ## Admin
 ![Ekran görüntüsü 2024-07-11 021011](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/293a5e58-04b0-4532-a079-b84a7f20efaa)
@@ -65,20 +68,3 @@ Proje, N-tier mimari yapısı üzerine inşa edilmiştir:
 ![Ekran görüntüsü 2024-07-11 021221](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/86524cfd-9cc0-4646-b4e3-e3726aeee0c3)
 ![Ekran görüntüsü 2024-07-11 021233](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/22916f43-e155-4d54-99de-2064b62f265f)
 ![Ekran görüntüsü 2024-07-11 021242](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/3a54d224-7738-488c-8378-ad77c259c321)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
