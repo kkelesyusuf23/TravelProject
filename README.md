@@ -24,11 +24,11 @@ Bu projenin amacı, şehir içi gezilerin daha verimli ve keyifli hale getirilme
 ## Proje Mimarisi
 
 Proje, N-tier mimari yapısı üzerine inşa edilmiştir:
-- **Sunum Katmanı**: Kullanıcı arayüzü, ASP.NET Core MVC kullanılarak geliştirilmiştir.
-- **İş Mantığı Katmanı**: Uygulamanın iş kurallarını ve mantığını içerir.
-- **Veri Erişim Katmanı**: Veritabanı işlemleri gerçekleştirilir.
-- **DTO Katmanı**: Veri transferi için kullanılan nesneleri tanımlar.
-- **Varlık Katmanı**: Uygulamanın veri modellerini tanımlar.
+- **Presentation**: Kullanıcı arayüzü, ASP.NET Core MVC kullanılarak geliştirilmiştir.
+- **Business**: Uygulamanın iş kurallarını ve mantığını içerir.
+- **Data Access**: Veritabanı işlemleri gerçekleştirilir.
+- **DTO**: Veri transferi için kullanılan nesneleri tanımlar.
+- **Entity**: Uygulamanın veri modellerini tanımlar.
 
 ## Kullanıcı Arayüzü
 
