@@ -46,9 +46,9 @@ Proje, N-tier mimari yapısı üzerine inşa edilmiştir:
 ![Ekran görüntüsü 2024-07-11 015848](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/1eb06f56-a512-4473-b2ca-00ad94c01c4b)
 ![Ekran görüntüsü 2024-07-11 015941](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/2cf01b72-b854-4724-8d05-f88d8224fe1d)
 ![Ekran görüntüsü 2024-07-11 020153](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/f2c1a872-e484-4149-9e55-c9b49da35cf5)
-![Ekran görüntüsü 2024-07-11 020128](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/e5bd21b2-c420-47fa-a76e-90b9c6198c14)
-![Ekran görüntüsü 2024-07-11 020105](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/a078298b-cc61-4c86-8da6-4f0e9e9a7b28)
 ![Ekran görüntüsü 2024-07-11 020002](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/c72b0ba5-7e6d-4f42-b222-5a4c184d7825)
+![Ekran görüntüsü 2024-07-11 020105](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/a078298b-cc61-4c86-8da6-4f0e9e9a7b28)
+![Ekran görüntüsü 2024-07-11 020128](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/e5bd21b2-c420-47fa-a76e-90b9c6198c14)
 
 
 
