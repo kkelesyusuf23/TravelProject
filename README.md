@@ -51,6 +51,25 @@ Proje, N-tier mimari yapısı üzerine inşa edilmiştir:
 ![Ekran görüntüsü 2024-07-11 020153](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/f2c1a872-e484-4149-9e55-c9b49da35cf5)
 
 
+## Admin
+![Ekran görüntüsü 2024-07-11 021011](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/293a5e58-04b0-4532-a079-b84a7f20efaa)
+![Ekran görüntüsü 2024-07-11 021027](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/38f48e96-89d0-4bd8-a689-5b00660de21e)
+![Ekran görüntüsü 2024-07-11 021047](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/c7bd7e70-3d92-4e97-993b-904e563a060a)
+![Ekran görüntüsü 2024-07-11 021100](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/40dc3d55-3200-4521-ad82-1a6c133412a4)
+![Ekran görüntüsü 2024-07-11 021112](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/592e110b-47dd-4c85-a1f6-e243d47a26af)
+![Ekran görüntüsü 2024-07-11 021123](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/633cff08-991d-45b0-9bc7-e7223328b6b5)
+![Ekran görüntüsü 2024-07-11 021135](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/e04f0fbc-7fb9-49be-a842-2df2ccce6fb2)
+![Ekran görüntüsü 2024-07-11 021144](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/2737829f-bb48-4bc1-8c31-cb29952f4d23)
+![Ekran görüntüsü 2024-07-11 021153](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/a524d06c-5333-40dc-94f3-4d096df87327)
+![Ekran görüntüsü 2024-07-11 021211](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/02bc2eab-9a74-49e8-941a-959d033281ea)
+![Ekran görüntüsü 2024-07-11 021221](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/86524cfd-9cc0-4646-b4e3-e3726aeee0c3)
+![Ekran görüntüsü 2024-07-11 021233](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/22916f43-e155-4d54-99de-2064b62f265f)
+![Ekran görüntüsü 2024-07-11 021242](https://github.com/kkelesyusuf23/TravelProject/assets/148692615/3a54d224-7738-488c-8378-ad77c259c321)
+
+
+
+
+
 
 
 
